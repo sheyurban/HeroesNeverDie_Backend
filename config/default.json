@@ -1,0 +1,13 @@
+{
+  "session": {
+    "tokenKey": "dadas",
+    "timeout": 30000
+  },
+  "db": {
+    "dbConfigOptions": {
+        "useNewUrlParser": true,
+        "useUnifiedTopology": true
+    },
+    "connectionString": "mongodb://localhost/TestDB"
+  }
+}
