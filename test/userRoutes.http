@@ -1,24 +1,24 @@
 http://localhost:8080/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImlhdCI6MTYyMDA1MTU4MCwiZXhwIjoxNjIxNjc0NjMyMjAyfQ.HXQqaaCE7PNQyILu5VqL6zJuS9YeLtdArG7gHKn5Zos
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMDMxMTM2NTg0NiwiaWF0IjoxNjIwMzEwNzY1fQ.18gWYJBjNlp-IwjdoTNx6Wj8ndJOiQuRS4JSFkzwJuk
 ###
 
 POST http://localhost:8080/users/register
 Content-Type: application/json
 
 {
-    "userID": "Shirley2",
+    "userID": "Shirley",
     "password": "qwerty",
-    "email": "haha@haha1sd3s12.csom"
+    "email": "haha@haha2.com"
 }
 ###
 
-POST http://localhost:8080/auth/login
+POST http://localhost:8080/users/registerNew
 Content-Type: application/json
 
 {
-    "userID": "Shirley",
-    "password": "qwerty"
-    
+    "userID": "Shirley12",
+    "password": "qwerty",
+    "email": "haha@haha1.com"
 }
 ###
 
@@ -31,7 +31,7 @@ Content-Type: application/json
 }
 ###
 
-DELETE http://localhost:8080/users/user?id=xxx
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImlhdCI6MTYyMDA1MTU4MCwiZXhwIjoxNjIxNjc0NjMyMjAyfQ.HXQqaaCE7PNQyILu5VqL6zJuS9YeLtdArG7gHKn5Zos
+DELETE http://localhost:8080/users/user?id=6093f631bfff5f5560718362
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMDMxMzU1MzIwMCwiaWF0IjoxNjIwMzEyOTUzfQ.e8S1dxuKW9-p5B3_Blym45xNT3s95x5Ljg0e127jNJQ
 
 ###

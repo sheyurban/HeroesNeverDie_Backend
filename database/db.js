@@ -24,4 +24,8 @@ function getDb() {
   return _db;
 }
 
+function close(){
+  console.log("Function still missing. (db.close())")
+}
+
 module.exports = { getDb, initDb };

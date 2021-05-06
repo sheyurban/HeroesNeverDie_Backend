@@ -16,16 +16,48 @@ function getUsers(callback) {
 
 async function createUser(req, callback) {
   const body = req.body;
-  console.log(body);
+
   if (!(body.userID && body.password)) {
-    return res.status(400).send({ error: "Data not formatted properly" });
+    return callback.status(400).send({ error: "Data not formatted properly" });
   }
+
+  // findUserBy(body.userID, (err, user) => {
+  //   if(user){
+  //    return callback.sendStatus(400).send({error: "Username already in use."})
+  //   }
+  // })
 
   const user = new User(body);
   user.save((err, doc) => {
     if (err) return console.error(err);
     callback(doc);
   });
+}
+
+async function createUser12(req, res) {
+  try {
+    const data = req.body;
+
+    findUserBy(data.userID, (err, user) => {
+      if (!err) {
+        if (user.email == data.email) {
+          return res.status(400).send({ error: "E-Mail already in use." });
+        } else if (user.userID == data.userID) {
+          return res.status(400).send({ error: "Username already in use." });
+        }
+      }
+
+      const newUser = new User(data);
+      newUser.save((err, document) => {
+        if (err)
+          res.status(400).send({ error: "Account couldn't be created." });
+        else res.status(201).send(document);
+      });
+    });
+  } catch (error) {
+    console.log({ error });
+    res.status(400).send({ error: "Catch: Account couldn't be created." });
+  }
 }
 
 function patchPassword(req, res) {
@@ -88,7 +120,7 @@ function findUserBy(searchUserID, callback) {
             var adminUser = new User();
             adminUser.userID = "admin";
             adminUser.password = "123";
-            adminUser.userName = "Default Admin Account";
+            adminUser.email = "Default Admin Account";
             adminUser.isAdmin = true;
 
             adminUser.save((err) => {
@@ -97,6 +129,12 @@ function findUserBy(searchUserID, callback) {
                 callback("Could not login to admin account", null);
               }
             });
+          } else {
+            console.log("Did not find user for userID: " + searchUserID);
+            return callback(
+              "Did not find user for userID: " + searchUserID,
+              null
+            );
           }
         }
       }
@@ -110,4 +148,5 @@ module.exports = {
   createUser,
   patchPassword,
   deleteUser,
+  createUser12,
 };

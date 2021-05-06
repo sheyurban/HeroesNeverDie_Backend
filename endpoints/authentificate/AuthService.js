@@ -24,17 +24,18 @@ function createSessionToken(props, callback) {
         } else {
           if (isMatch) {
             logger.debug("Password is correct. Create token.");
-            var issuedAt = new Date().getTime();
+            var issuedAt = Date.now();
             var expirationTime = config.get("session.timeout");
-            var expiresAt = issuedAt + expirationTime * 1000;
+            var expiresAt = issuedAt + expirationTime * 60000;
+
             var privateKey = config.get("session.tokenKey");
             let token = jwt.sign(
               {
                 user: user.userID,
+                exp: expiresAt,
               },
               privateKey,
               {
-                expiresIn: expiresAt,
                 algorithm: "HS256",
               }
             );
@@ -53,21 +54,28 @@ function createSessionToken(props, callback) {
 }
 
 function checkSessionToken(req, res, next) {
+  console.log("Check if token is okay");
   try {
     let token = req.get("Authorization");
+
     token = token.replace("Bearer ", "");
     const privateKey = config.get("session.tokenKey");
     const decoded = jwt.verify(token, privateKey, {
       algorithm: "HS256",
     });
-    const userID = decoded.user;
-    userService.findUserBy(userID, (err, user) => {
-      if (err) res.sendStatus(401);
-      if (user) {
-        delete user.password
-        req.user = user
-        next()};
-    });
+    if (Date.now() >= decoded.exp) {
+      res.sendStatus(401);
+    } else {
+      const userID = decoded.user;
+      userService.findUserBy(userID, (err, user) => {
+        if (err) res.sendStatus(401);
+        if (user) {
+          delete user.password;
+          req.user = user;
+          next();
+        }
+      });
+    }
   } catch (error) {
     res.sendStatus(401);
   }

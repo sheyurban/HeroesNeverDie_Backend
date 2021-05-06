@@ -19,7 +19,7 @@ router.post("/loginBasic", (req, res, next) => {
           const { id, userID, userName, ...partialObject } = user;
           const subset = { id, userID, userName };
           console.log(JSON.stringify(subset));
-          res.send(subset);
+          res.status(200).send(subset);
         } else {
           console.log(
             "User is null even though a token has been created. Error: " + err
@@ -27,36 +27,13 @@ router.post("/loginBasic", (req, res, next) => {
         }
       } else {
         console.log("token has not been created, Error: " + err);
-        res.send("Could not create token");
+        res.status(400).send("Could not create token");
       }
     });
   } catch (error) {
-    res.sendStatus(400);
+    res.status(400).send("User couldn't be logged in.");
   }
 });
 
-router.post("/login", (req, res, next) => {
-  console.log("Want to create token");
-
-  authService.createSessionToken(req.body, (err, token, user) => {
-    if (token) {
-      res.header("Authorization", "Bearer " + token);
-
-      if (user) {
-        const { id, userID, userName, ...partialObject } = user;
-        const subset = { id, userID, userName };
-        console.log(JSON.stringify(subset));
-        res.send(subset);
-      } else {
-        console.log(
-          "User is null even though a token has been created. Error: " + err
-        );
-      }
-    } else {
-      console.log("token has not been created, Error: " + err);
-      res.send("Could not create token");
-    }
-  });
-});
 
 module.exports = router;

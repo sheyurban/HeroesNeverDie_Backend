@@ -1,11 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const atob = require("atob");
 const userService = require("./UserService");
 const authService = require("../authentificate/AuthService");
 
 router.get("/", authService.checkSessionToken, (req, res) => {
-  console.log("User Route");
   userService.getUsers((err, result) => {
     console.log("Result: " + result);
     if (result) {
@@ -22,8 +20,26 @@ router.post("/register", async (req, res) => {
   });
 });
 
-router.patch("/resetPassword", authService.checkSessionToken, userService.patchPassword)
+router.post("/registerNew", userService.createUser12);
 
-router.delete("/user", authService.checkSessionToken, userService.deleteUser)
+router.patch(
+  "/resetPassword",
+  authService.checkSessionToken,
+  userService.patchPassword
+);
+
+// router.delete("/user", authService.checkSessionToken, userService.deleteUser)
+router.delete("/user", userService.deleteUser);
+
+router.get("/user", (req, res) => {
+  userService.getUsers((err, result) => {
+    console.log("Result: " + result);
+    if (result) {
+      res.send(Object.values(result));
+    } else {
+      res.send("Es gab Probleme");
+    }
+  });
+});
 
 module.exports = router;

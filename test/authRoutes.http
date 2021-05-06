@@ -1,12 +1,4 @@
-POST http://localhost:8080/auth/login
-Content-Type: application/json
-
-{
-    "userID": "Shirley",
-    "password": "qwerty"
-    
-}
 ###
 
-POST http://localhost:8080/auth/loginBasic
+POST http://localhost:8080/authenticate/loginBasic
 Authorization: Basic ewogICAgInVzZXJJRCI6ICJTaGlybGV5IiwKICAgICJwYXNzd29yZCI6ICJxd2VydHkiCiAgICAKfQ==

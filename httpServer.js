@@ -24,7 +24,7 @@ app.use(
 /* Adding the routes */
 
 app.use("/users", userRoutes);
-app.use("/auth", authRoutes);
+app.use("/authenticate", authRoutes);
 app.use("/fileUpload", fileUploadRoutes);
 
 database.initDb((err, db) => {
