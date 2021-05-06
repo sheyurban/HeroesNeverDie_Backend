@@ -14,13 +14,7 @@ router.get("/", authService.checkSessionToken, (req, res) => {
   });
 });
 
-router.post("/register", async (req, res) => {
-  userService.createUser(req, (doc) => {
-    res.status(201).send(doc);
-  });
-});
-
-router.post("/registerNew", userService.createUser12);
+router.post("/register", userService.createUser);
 
 router.patch(
   "/resetPassword",
@@ -28,18 +22,6 @@ router.patch(
   userService.patchPassword
 );
 
-// router.delete("/user", authService.checkSessionToken, userService.deleteUser)
-router.delete("/user", userService.deleteUser);
-
-router.get("/user", (req, res) => {
-  userService.getUsers((err, result) => {
-    console.log("Result: " + result);
-    if (result) {
-      res.send(Object.values(result));
-    } else {
-      res.send("Es gab Probleme");
-    }
-  });
-});
+router.delete("/user", authService.checkSessionToken, userService.deleteUser)
 
 module.exports = router;

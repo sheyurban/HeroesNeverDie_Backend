@@ -14,27 +14,8 @@ function getUsers(callback) {
   });
 }
 
-async function createUser(req, callback) {
-  const body = req.body;
 
-  if (!(body.userID && body.password)) {
-    return callback.status(400).send({ error: "Data not formatted properly" });
-  }
-
-  // findUserBy(body.userID, (err, user) => {
-  //   if(user){
-  //    return callback.sendStatus(400).send({error: "Username already in use."})
-  //   }
-  // })
-
-  const user = new User(body);
-  user.save((err, doc) => {
-    if (err) return console.error(err);
-    callback(doc);
-  });
-}
-
-async function createUser12(req, res) {
+async function createUser(req, res) {
   try {
     const data = req.body;
 
@@ -148,5 +129,4 @@ module.exports = {
   createUser,
   patchPassword,
   deleteUser,
-  createUser12,
 };

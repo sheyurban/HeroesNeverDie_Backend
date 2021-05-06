@@ -6,19 +6,9 @@ POST http://localhost:8080/users/register
 Content-Type: application/json
 
 {
-    "userID": "Shirley",
+    "userID": "Shirley231",
     "password": "qwerty",
     "email": "haha@haha2.com"
-}
-###
-
-POST http://localhost:8080/users/registerNew
-Content-Type: application/json
-
-{
-    "userID": "Shirley12",
-    "password": "qwerty",
-    "email": "haha@haha1.com"
 }
 ###
 
