@@ -1,4 +1,24 @@
 ###
 
 POST http://localhost:8080/authenticate/loginBasic
-Authorization: Basic ewogICAgInVzZXJJRCI6ICJTaGlybGV5IiwKICAgICJwYXNzd29yZCI6ICJxd2VydHkiCiAgICAKfQ==
+Authorization: Basic ewogICAgInVzZXJuYW1lIjogIlNoaXJsZXkiLAogICAgInBhc3N3b3JkIjogInF3ZXJ0eSIKIH0=
+
+###
+POST http://localhost:8080/authenticate/register
+Content-Type: application/json
+
+{
+    "username": "Shirleys1",
+    "password": "qwerty",
+    "email": "haha@hahas1.com"
+}
+###
+
+PATCH http://localhost:8080/authenticate/resetPassword
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImlhdCI6MTYyMDA1MTU4MCwiZXhwIjoxNjIxNjc0NjMyMjAyfQ.HXQqaaCE7PNQyILu5VqL6zJuS9YeLtdArG7gHKn5Zos
+Content-Type: application/json
+
+{
+    "newPw": "ewoibmV3UHciOiJxd2VyMTIzMTIzdHp1aW9wIgp9"   
+}
+###

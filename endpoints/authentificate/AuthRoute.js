@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const atob = require("atob");
+var path = require("path");
 
-var authService = require("./AuthService");
+const authService = require("./AuthService");
+const userService = require("../user/UserService")
 
 router.post("/loginBasic", (req, res, next) => {
   console.log("Want to create token");
@@ -16,8 +18,8 @@ router.post("/loginBasic", (req, res, next) => {
         res.header("Authorization", "Bearer " + token);
 
         if (user) {
-          const { id, userID, userName, ...partialObject } = user;
-          const subset = { id, userID, userName };
+          const { id, username, email, ...partialObject } = user;
+          const subset = { id, username, email };
           console.log(JSON.stringify(subset));
           res.status(200).send(subset);
         } else {
@@ -34,6 +36,18 @@ router.post("/loginBasic", (req, res, next) => {
     res.status(400).send("User couldn't be logged in.");
   }
 });
+
+router.post("/register", userService.createUser);
+
+router.patch(
+  "/resetPassword",
+  authService.checkSessionToken,
+  userService.patchPassword
+);
+
+router.get("/activate", (req, res) => {
+  res.sendFile(path.join(__dirname + "/upload.html"));
+})
 
 
 module.exports = router;

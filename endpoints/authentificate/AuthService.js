@@ -11,7 +11,7 @@ function createSessionToken(props, callback) {
     return;
   }
 
-  userService.findUserBy(props.userID, (err, user) => {
+  userService.findUserBy(props.username, (err, user) => {
     if (user) {
       logger.debug("Found user, check the password");
 
@@ -31,7 +31,7 @@ function createSessionToken(props, callback) {
             var privateKey = config.get("session.tokenKey");
             let token = jwt.sign(
               {
-                user: user.userID,
+                user: user.username,
                 exp: expiresAt,
               },
               privateKey,
@@ -42,7 +42,7 @@ function createSessionToken(props, callback) {
             logger.debug("Token created: " + token);
             callback(null, token, user);
           } else {
-            logger.error("Password or UserID are invalid");
+            logger.error("Password or username are invalid");
             callback(err, null);
           }
         }
@@ -66,8 +66,8 @@ function checkSessionToken(req, res, next) {
     if (Date.now() >= decoded.exp) {
       res.sendStatus(401);
     } else {
-      const userID = decoded.user;
-      userService.findUserBy(userID, (err, user) => {
+      const username = decoded.user;
+      userService.findUserBy(username, (err, user) => {
         if (err) res.sendStatus(401);
         if (user) {
           delete user.password;

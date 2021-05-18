@@ -1,0 +1,42 @@
+###
+POST http://localhost:8080/post/create
+Content-Type: application/json
+
+{
+    "title": "Hanzo Main Guide",
+    "postedBy": "60951807077e3357f084488d",
+    "category": "Guide",
+    "tags": [{"map": "hanamura", "hero": "hanzo"}],
+    "content": "Awesome content here..."
+}
+###
+
+GET http://localhost:8080/post
+
+###
+
+GET http://localhost:8080/post/user/60951807077e3357f084488d
+
+###
+
+DELETE http://localhost:8080/post/delete/60a3fe8d0fa2ed3df889db7a
+
+###
+
+PATCH http://localhost:8080/post/update/60a419dba0c1f92564a715a4
+Content-Type: application/json
+
+{
+    "title": "Genji Main Guide LOL",
+    "tags": [{"map": "route66", "hero": "hanzo"}],
+    "content": "Awesome content here..."
+}
+
+###
+PATCH http://localhost:8080/post/like
+Content-Type: application/json
+
+{
+    "idUser": "60951807077e3357f084488d",
+    "idPost": "60a419dba0c1f92564a715a4"
+}

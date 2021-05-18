@@ -14,13 +14,6 @@ router.get("/", authService.checkSessionToken, (req, res) => {
   });
 });
 
-router.post("/register", userService.createUser);
-
-router.patch(
-  "/resetPassword",
-  authService.checkSessionToken,
-  userService.patchPassword
-);
 
 router.delete("/user", authService.checkSessionToken, userService.deleteUser)
 

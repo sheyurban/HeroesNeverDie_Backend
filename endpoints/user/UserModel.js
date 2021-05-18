@@ -3,19 +3,32 @@ const bcrypt = require("bcrypt");
 
 const UserSchema = new mongoose.Schema(
   {
-    userID: { type: String, unique: true, required: true },
-    password: { type: String, required: true },
-    email: { type: String, unique: true, required: true },
+    username: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+    },
     image: String,
-    isAdmin: { type: Boolean, default: false },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
-  { timeStamps: true }
+  { timestamps: true }
 );
 
-
 UserSchema.methods.whoAmI = () => {
-  var output = this.userID
-    ? "My name is " + this.userName
+  var output = this.username
+    ? "My name is " + this.username
     : "I dont have a name";
   console.log(output);
 };
@@ -41,8 +54,6 @@ UserSchema.pre(
     next(err);
   }
 );
-
-
 
 UserSchema.methods.comparePassword = function (candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {

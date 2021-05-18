@@ -1,6 +1,8 @@
 const User = require("./UserModel");
 const bcrypt = require("bcrypt");
 const atob = require("atob");
+const validator = require("../user/ValidationModel");
+const Joi = require("joi");
 
 function getUsers(callback) {
   User.find((err, users) => {
@@ -14,31 +16,47 @@ function getUsers(callback) {
   });
 }
 
-
 async function createUser(req, res) {
   try {
     const data = req.body;
 
-    findUserBy(data.userID, (err, user) => {
-      if (!err) {
-        if (user.email == data.email) {
-          return res.status(400).send({ error: "E-Mail already in use." });
-        } else if (user.userID == data.userID) {
-          return res.status(400).send({ error: "Username already in use." });
-        }
-      }
+    // Check if all values are accepted
+    validateNewUser(data, (err) => {
+      if (err) return res.status(400).send(err.details[0].message);
 
-      const newUser = new User(data);
-      newUser.save((err, document) => {
-        if (err)
-          res.status(400).send({ error: "Account couldn't be created." });
-        else res.status(201).send(document);
+      // Check if username or email is already used
+      findUserBy(data.username, (err, user) => {
+        if (!err) {
+          if (user.email == data.email) {
+            return res.status(400).send({ error: "E-Mail already in use." });
+          } else if (user.username == data.username) {
+            return res.status(400).send({ error: "Username already in use." });
+          }
+        }
+
+        // Save new User in database, password will be hashed pre save
+        const newUser = new User(data);
+        newUser.save((err, document) => {
+          if (err)
+            res.status(400).send({ error: "Account couldn't be created." });
+          else res.status(201).send(document);
+        });
       });
     });
   } catch (error) {
     console.log({ error });
-    res.status(400).send({ error: "Catch: Account couldn't be created." });
+    res.status(400).send({ error: "CatchBlock: Account couldn't be created." });
   }
+}
+
+function validateNewUser(userData, callback) {
+  const schema = Joi.object({
+    username: Joi.string().min(4).required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().min(6).required(),
+  });
+  const { error } = schema.validate(userData);
+  callback(error);
 }
 
 function patchPassword(req, res) {
@@ -58,15 +76,15 @@ function patchPassword(req, res) {
 
 function deleteUser(req, res) {
   try {
-    const deleteUserID = req.query.id;
+    const deleteUsername = req.query.id;
     const user = req.user;
     if (user.isAdmin) {
-      findUserBy(user.userID, (user) => {
-        User.deleteOne({ userID: user.userID });
+      findUserBy(user.username, (user) => {
+        User.deleteOne({ username: user.username });
       });
-    } else if (user.userID == deleteUserID) {
-      findUserBy(user.userID, (user) => {
-        User.deleteOne({ userID: user.userID });
+    } else if (user.username == deleteUsername) {
+      findUserBy(user.username, (user) => {
+        User.deleteOne({ username: user.username });
       });
     } else {
       throw Error();
@@ -76,30 +94,33 @@ function deleteUser(req, res) {
   }
 }
 
-function findUserBy(searchUserID, callback) {
-  console.log("UserService: find User by ID " + searchUserID);
-  if (!searchUserID) {
-    console.log("UserId is missing");
-    callback("UserID is missing");
+function findUserBy(searchUsername, callback) {
+  console.log("UserService: find User by ID " + searchUsername);
+  if (!searchUsername) {
+    console.log("username is missing");
+    callback("username is missing");
     return;
   } else {
-    var query = User.findOne({ userID: searchUserID });
+    var query = User.findOne({ username: searchUsername });
 
     query.exec(function (err, user) {
       if (err) {
-        console.log("Did not find user for userID: " + searchUserID);
-        return callback("Did not find user for userID: " + searchUserID, null);
+        console.log("Did not find user for username: " + searchUsername);
+        return callback(
+          "Did not find user for username: " + searchUsername,
+          null
+        );
       } else {
         if (user) {
-          console.log(`Found userID: ${searchUserID}`);
+          console.log(`Found username: ${searchUsername}`);
           callback(null, user);
         } else {
-          if ("admin" == searchUserID) {
+          if ("admin" == searchUsername) {
             console.log(
               "Does not have admin account yet. Create it with default password"
             );
             var adminUser = new User();
-            adminUser.userID = "admin";
+            adminUser.username = "admin";
             adminUser.password = "123";
             adminUser.email = "Default Admin Account";
             adminUser.isAdmin = true;
@@ -111,9 +132,9 @@ function findUserBy(searchUserID, callback) {
               }
             });
           } else {
-            console.log("Did not find user for userID: " + searchUserID);
+            console.log("Did not find user for username: " + searchUsername);
             return callback(
-              "Did not find user for userID: " + searchUserID,
+              "Did not find user for username: " + searchUsername,
               null
             );
           }
