@@ -8,9 +8,10 @@ POST http://localhost:8080/authenticate/register
 Content-Type: application/json
 
 {
-    "username": "Shirleys1",
+    "username": "Shirley2",
     "password": "qwerty",
-    "email": "haha@hahas1.com"
+    "email": "haha@haha2.com",
+    "isAdmin": true
 }
 ###
 

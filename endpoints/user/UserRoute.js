@@ -5,7 +5,6 @@ const authService = require("../authentificate/AuthService");
 
 router.get("/", authService.checkSessionToken, (req, res) => {
   userService.getUsers((err, result) => {
-    console.log("Result: " + result);
     if (result) {
       res.send(Object.values(result));
     } else {

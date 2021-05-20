@@ -9,6 +9,7 @@ const userRoutes = require("./endpoints/user/UserRoute");
 const fileUploadRoutes = require("./endpoints/fileUplodad/FileUploadRoute");
 const authRoutes = require("./endpoints/authentificate/AuthRoute");
 const postRoutes = require("./endpoints/post/PostRoute")
+const commentRoutes = require("./endpoints/comment/CommentRoute")
 
 const app = express();
 app.use(express.json());
@@ -30,6 +31,7 @@ app.use("/users", userRoutes);
 app.use("/authenticate", authRoutes);
 app.use("/fileUpload", fileUploadRoutes);
 app.use("/post", postRoutes)
+app.use("/comment", commentRoutes)
 
 database.initDb((err, db) => {
   if (db) console.log("Anbindung von Datenbank erfolgreich");

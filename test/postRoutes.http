@@ -1,42 +1,69 @@
-###
+### post a new post
 POST http://localhost:8080/post/create
 Content-Type: application/json
 
 {
     "title": "Hanzo Main Guide",
     "postedBy": "60951807077e3357f084488d",
-    "category": "Guide",
+    "category": "Discuss",
     "tags": [{"map": "hanamura", "hero": "hanzo"}],
     "content": "Awesome content here..."
 }
-###
-
+### get all posts
 GET http://localhost:8080/post
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTUyODA4MzQzNSwiaWF0IjoxNjIxNTI3NDgzfQ.MmP37HNTGQ6YabXkHIazIaeoi3cPu5ws7AI3-pphPPI
 
-###
-
-GET http://localhost:8080/post/user/60951807077e3357f084488d
-
-###
-
-DELETE http://localhost:8080/post/delete/60a3fe8d0fa2ed3df889db7a
-
-###
-
-PATCH http://localhost:8080/post/update/60a419dba0c1f92564a715a4
+### get post by id
+GET http://localhost:8080/post/id
 Content-Type: application/json
 
 {
-    "title": "Genji Main Guide LOL",
+    "id": "60a662240bce15453057a094"
+}
+
+### get all posts of a user
+GET http://localhost:8080/post/user
+Content-Type: application/json
+
+{
+    "id": "60951807077e3357f084488d"
+}
+
+### delete a post
+DELETE http://localhost:8080/post/delete
+Content-Type: application/json
+
+{
+    "id": "60a6353134e2df2c38d6ebba"
+}
+
+### update a post
+PATCH http://localhost:8080/post/update
+Content-Type: application/json
+
+{
+    "id": "60a63ad30f63d443f84eaa4f",
+    "title": "Genji Main Guide",
     "tags": [{"map": "route66", "hero": "hanzo"}],
     "content": "Awesome content here..."
 }
 
-###
+### add a like to post 
 PATCH http://localhost:8080/post/like
 Content-Type: application/json
 
 {
     "idUser": "60951807077e3357f084488d",
-    "idPost": "60a419dba0c1f92564a715a4"
+    "idPost": "60a662240bce15453057a094"
 }
+
+### get all posts a user likes
+GET http://localhost:8080/post/like
+Content-Type: application/json
+
+{
+    "id": "60951807077e3357f084488d"
+}
+
+### get latest posts for home view
+GET http://localhost:8080/post/home

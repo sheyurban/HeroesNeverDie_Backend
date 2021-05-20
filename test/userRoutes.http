@@ -1,5 +1,5 @@
 http://localhost:8080/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMDMxMTM2NTg0NiwiaWF0IjoxNjIwMzEwNzY1fQ.18gWYJBjNlp-IwjdoTNx6Wj8ndJOiQuRS4JSFkzwJuk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTUyNjU3ODk3NCwiaWF0IjoxNjIxNTI1OTc4fQ.u7ZxJOg707CWsbeBfQiljDP_09J9NBAOEWBziZBlU5U
 ###
 
 DELETE http://localhost:8080/users/user?id=6093f631bfff5f5560718362

@@ -4,6 +4,8 @@ const atob = require("atob");
 const validator = require("../user/ValidationModel");
 const Joi = require("joi");
 
+// const authService = require("../authentificate/AuthService")
+
 function getUsers(callback) {
   User.find((err, users) => {
     if (err) {
@@ -78,11 +80,8 @@ function deleteUser(req, res) {
   try {
     const deleteUsername = req.query.id;
     const user = req.user;
-    if (user.isAdmin) {
-      findUserBy(user.username, (user) => {
-        User.deleteOne({ username: user.username });
-      });
-    } else if (user.username == deleteUsername) {
+
+    if (user.isAdmin || user.username == deleteUsername) {
       findUserBy(user.username, (user) => {
         User.deleteOne({ username: user.username });
       });

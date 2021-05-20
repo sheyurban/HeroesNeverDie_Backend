@@ -1,0 +1,9 @@
+### create a new comment
+POST http://localhost:8080/comment/create
+Content-Type: application/json
+
+{
+    "postedBy": "60951807077e3357f084488d",
+    "post": "60a662240bce15453057a094",
+    "content": "my first comment"
+}
