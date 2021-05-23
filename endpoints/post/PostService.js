@@ -59,7 +59,7 @@ function deletePost(req, res) {
   try {
     const { id } = req.body;
     Post.deleteOne({ _id: id }, (err) => {
-      if (err) res.sendStatus(400);
+      if (err) return res.sendStatus(400);
       res.sendStatus(200);
     });
   } catch (error) {

@@ -18,6 +18,18 @@ function getUsers(callback) {
   });
 }
 
+function getUser(req, res) {
+  try {
+    const { id } = req.body;
+    User.findById({ _id: id }, (err, user) => {
+      if (err) return res.sendStatus(400);
+      const { id, username, email, ...partialObject } = user;
+      const subset = { id, username, email };
+      res.send(subset);
+    });
+  } catch (error) {}
+}
+
 async function createUser(req, res) {
   try {
     const data = req.body;
@@ -76,6 +88,19 @@ function patchPassword(req, res) {
   }
 }
 
+function patchUserdata(req,res){
+
+}
+
+function isAllowed (req, res, next){
+  try {
+    const {id} = req.body
+  } catch (error) {
+    
+  }
+
+}
+
 function deleteUser(req, res) {
   try {
     const deleteUsername = req.query.id;
@@ -96,7 +121,6 @@ function deleteUser(req, res) {
 function findUserBy(searchUsername, callback) {
   console.log("UserService: find User by ID " + searchUsername);
   if (!searchUsername) {
-    console.log("username is missing");
     callback("username is missing");
     return;
   } else {
@@ -144,6 +168,7 @@ function findUserBy(searchUsername, callback) {
 }
 
 module.exports = {
+  getUser,
   getUsers,
   findUserBy,
   createUser,

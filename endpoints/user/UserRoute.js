@@ -16,4 +16,6 @@ router.get("/", authService.checkSessionToken, (req, res) => {
 
 router.delete("/user", authService.checkSessionToken, userService.deleteUser)
 
+router.get("/id", userService.getUser)
+
 module.exports = router;

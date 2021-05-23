@@ -1,8 +1,16 @@
-http://localhost:8080/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTUyNjU3ODk3NCwiaWF0IjoxNjIxNTI1OTc4fQ.u7ZxJOg707CWsbeBfQiljDP_09J9NBAOEWBziZBlU5U
+GET http://localhost:8080/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTU4OTkwOTkxNywiaWF0IjoxNjIxNTg5MzA5fQ.cANB6Dz7fzEA6PG5jCALtYVM-QJefdArATgZ4HlbWKg
 ###
 
-DELETE http://localhost:8080/users/user?id=6093f631bfff5f5560718362
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMDMxMzU1MzIwMCwiaWF0IjoxNjIwMzEyOTUzfQ.e8S1dxuKW9-p5B3_Blym45xNT3s95x5Ljg0e127jNJQ
+DELETE http://localhost:8080/users/user?id=60951807077e3357f084488d
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTU4OTkwOTkxNywiaWF0IjoxNjIxNTg5MzA5fQ.cANB6Dz7fzEA6PG5jCALtYVM-QJefdArATgZ4HlbWKg
 
-###
+### get one user
+
+GET http://localhost:8080/users/id
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTU4OTkwOTkxNywiaWF0IjoxNjIxNTg5MzA5fQ.cANB6Dz7fzEA6PG5jCALtYVM-QJefdArATgZ4HlbWKg
+Content-Type: application/json
+
+{
+    "id": "60a3a36d5f2b5344e4b66a07"   
+}

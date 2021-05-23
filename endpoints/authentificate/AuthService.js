@@ -57,14 +57,14 @@ function checkSessionToken(req, res, next) {
   console.log("Check if token is okay");
   try {
     let token = req.get("Authorization");
-
+    
     token = token.replace("Bearer ", "");
     const privateKey = config.get("session.tokenKey");
     const decoded = jwt.verify(token, privateKey, {
       algorithm: "HS256",
     });
     if (Date.now() >= decoded.exp) {
-      res.sendStatus(401);
+      res.status(401).send("Token already expired");
     } else {
       const username = decoded.user;
       userService.findUserBy(username, (err, user) => {
