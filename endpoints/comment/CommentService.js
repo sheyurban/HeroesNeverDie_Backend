@@ -34,10 +34,12 @@ function createComment(req, res) {
 function getComments(req, res) {
   try {
     const { post } = req.body;
-    Comment.find({ post: post }, (err, comments) => {
-      if (err) return res.sendStatus(400);
-      res.send(comments);
-    });
+    Comment.find({ post: post })
+      .populate("postedBy", ["username", "_id"])
+      .exec((err, comments) => {
+        if (err) return res.sendStatus(400);
+        res.send(comments);
+      });
   } catch (error) {
     res.status(500);
   }

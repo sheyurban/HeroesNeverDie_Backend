@@ -4,14 +4,16 @@ const atob = require("atob");
 var path = require("path");
 
 const authService = require("./AuthService");
-const userService = require("../user/UserService")
+const userService = require("../user/UserService");
+const User = require("../user/UserModel");
 
 router.post("/loginBasic", (req, res, next) => {
   console.log("Want to create token");
   try {
     let loginData = req.get("Authorization");
     loginData = loginData.replace("Basic ", "");
-    loginData = JSON.parse(atob(loginData));
+    loginData = atob(loginData).split(":");
+    loginData = { username: loginData[0], password: loginData[1] };
 
     authService.createSessionToken(loginData, (err, token, user) => {
       if (token) {
@@ -47,7 +49,15 @@ router.patch(
 
 router.get("/activate", (req, res) => {
   res.sendFile(path.join(__dirname + "/upload.html"));
-})
+});
 
+router.get("/verify", (req, res) => {
+  const { token } = req.query;
+  // find user
+  User.find({token}, (err, user) => {
+    // if user found, set isVerified to true
+
+  })
+});
 
 module.exports = router;

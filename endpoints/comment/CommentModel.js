@@ -13,12 +13,6 @@ const CommentSchema = new mongoose.Schema(
       required: true,
     },
     dateCreated: Date,
-    likes: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
     content: {
       type: String,
       required: true,

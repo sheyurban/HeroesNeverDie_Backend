@@ -77,14 +77,10 @@ Content-Type: application/json
 
 ### get latest posts for home view
 GET http://localhost:8080/post/home
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg2ODE4NzY3NCwiaWF0IjoxNjIxODY3NTg3fQ.J8643ByXkDVOgaZ2vVjJwH2vE8JDRBTLFlwVE8k7oKE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjAzMjU2Mzk5NCwiaWF0IjoxNjIyMDI2NTYzfQ.fz0Kkzp-ChI2tecboYSiOELk3vidaj0Y1I_yixVXqHI
 
-### get latest posts for home view
-GET http://localhost:8080/post/filter
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg3NjcyNzg2OSwiaWF0IjoxNjIxODcwNzI3fQ.e5W7jK2xGMnzpkOBKv6q_XBt8l0bzkbGL2bUOJmAH_s
-Content-Type: application/json
+###
+GET http://localhost:8080/post/test
 
-{
-    "tags": [{"map": "hanamura"}],
-    "category": "Discus"
-}
+
+

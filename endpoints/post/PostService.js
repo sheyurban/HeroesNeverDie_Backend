@@ -1,4 +1,6 @@
 const Post = require("./PostModel");
+var logger = require("../../config/winston");
+
 
 async function getPost(req, res) {
   try {
@@ -144,34 +146,28 @@ function getLikesOfUser(req, res) {
 
 function getHome(req, res) {
   try {
-    Post.find({ category: { $in: ["Guide", "Discuss"] } }, (err, posts) => {
-      if (err) return res.sendStatus(400);
-      res.send(posts);
-    });
-  } catch (error) {
-    res.sendStatus(400);
-  }
-}
-
-function getFilteredPosts(req, res) {
-  try {
-    const { tags, category } = req.body;
-    console.log(typeof tags);
-    Post.find(
-      {
-        tags: { $elemMatch: tags[0] },
-        category: { $in: [category] },
+    Post.find({
+      category: {
+        $in: ["Guide", "Discuss"],
       },
-
-      (err, posts) => {
+    })
+      .populate({
+        path: "comments",
+        populate: {
+          path: "postedBy",
+          select: ["username", "_id"],
+        },
+      })
+      .exec((err, posts) => {
         if (err) return res.sendStatus(400);
         res.send(posts);
-      }
-    );
+      });
   } catch (error) {
     res.sendStatus(400);
   }
 }
+
+
 
 module.exports = {
   getPost,
@@ -183,5 +179,4 @@ module.exports = {
   addLike,
   getLikesOfUser,
   getHome,
-  getFilteredPosts,
 };

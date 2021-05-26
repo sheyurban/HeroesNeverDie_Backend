@@ -13,6 +13,10 @@ router.get("/id", authService.checkSessionToken, PostService.getPost);
 // get all posts of a specific user
 router.get("/user", authService.checkSessionToken, PostService.getPostsOfUser);
 
+router.get("/test", (req, res) => {
+  res.json({ message: "pass!" });
+});
+
 // create a new post
 router.post("/create", authService.checkSessionToken, PostService.createPost);
 
@@ -30,7 +34,5 @@ router.get("/like", authService.checkSessionToken, PostService.getLikesOfUser);
 
 // gets all post of category guide or discuss for home view
 router.get("/home", authService.checkSessionToken, PostService.getHome);
-
-router.get("/filter", authService.checkSessionToken, PostService.getFilteredPosts)
 
 module.exports = router;

@@ -1,6 +1,8 @@
 var appRoot = require("app-root-path");
-var winston = require("winston");
 var path = require("path");
+const winston = require("winston");
+const { createLogger, format, transports } = require("winston");
+const { combine, splat, timestamp, printf } = format;
 var PROJECT_ROOT = path.join(__dirname, "..");
 
 var options = {
@@ -21,11 +23,20 @@ var options = {
   },
 };
 
-var logger = winston.createLogger({
+const myFormat = printf(({ level, message, timestamp, ...metadata }) => {
+  let msg = `${timestamp} [${level}] : ${message} `;
+  if (metadata) {
+    msg += JSON.stringify(metadata);
+  }
+  return msg;
+});
+
+var logger = createLogger({
   transports: [
     new winston.transports.File(options.file),
     new winston.transports.Console(options.console),
   ],
+  format: combine(format.colorize(), splat(), timestamp(), myFormat),
   exitOnError: false,
 });
 
@@ -89,4 +100,4 @@ module.exports.error = function () {
   logger.error.apply(logger, formatLogArguments(arguments));
 };
 
-module.exports.stream = logger.stream
+module.exports.stream = logger.stream;

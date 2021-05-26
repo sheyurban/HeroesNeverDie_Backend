@@ -4,8 +4,9 @@ const atob = require("atob");
 const validator = require("../user/ValidationModel");
 const Joi = require("joi");
 const Post = require("../post/PostModel");
-
-
+const hbs = require("handlebars");
+const mail = require("../email/mail");
+const fs = require("fs");
 
 function getUsers(callback) {
   User.find((err, users) => {
@@ -38,10 +39,12 @@ async function createUser(req, res) {
     // Check if all values are accepted
     validateNewUser(data, (err) => {
       if (err) return res.status(400).send(err.details[0].message);
+      console.log(data)
 
       // Check if username or email is already used
-      findUserBy(data.username, (err, user) => {
-        if (!err) {
+      User.find({username: data.username}, (err, user) => {
+        if (!err) { 
+          console.log(user[0])
           if (user.email == data.email) {
             return res.status(400).send({ error: "E-Mail already in use." });
           } else if (user.username == data.username) {
@@ -54,9 +57,51 @@ async function createUser(req, res) {
         newUser.save((err, document) => {
           if (err)
             res.status(400).send({ error: "Account couldn't be created." });
-          else res.status(201).send(document);
+          else {
+            const filePath = "./endpoints/email/register.html";
+            const source = fs.readFileSync(filePath, "utf-8").toString();
+            const template = hbs.compile(source);
+            const replacements = {
+              user: document.username,
+              link: `https://localhost:8080/verify?token=${document.token}`
+            };
+            const htmlSite = template(replacements);
+            mail.sendMail(document.email, "Activate Account", htmlSite);
+            delete document.password;
+            res.sendStatus(201)
+          }
         });
-      });
+      })
+
+      // findUserBy(data.username, (err, user) => {
+      //   if (!err) {
+      //     if (user.email == data.email) {
+      //       return res.status(400).send({ error: "E-Mail already in use." });
+      //     } else if (user.username == data.username) {
+      //       return res.status(400).send({ error: "Username already in use." });
+      //     }
+      //   }
+
+      //   // Save new User in database, password will be hashed pre save
+      //   const newUser = new User(data);
+      //   newUser.save((err, document) => {
+      //     if (err)
+      //       res.status(400).send({ error: "Account couldn't be created." });
+      //     else {
+      //       console.log(document);
+      //       const filePath = "./endpoints/email/register.html";
+      //       const source = fs.readFileSync(filePath, "utf-8").toString();
+      //       const template = hbs.compile(source);
+      //       const replacements = {
+      //         user: document.username,
+      //       };
+      //       const htmlSite = template(replacements);
+      //       mail.sendMail(document.email, "Activate Account", htmlSite);
+      //       delete document.password;
+      //       res.status(201).send(document);
+      //     }
+      //   });
+      // });
     });
   } catch (error) {
     console.log({ error });
@@ -143,46 +188,46 @@ function findUserBy(searchUsername, callback) {
     callback("username is missing");
     return;
   } else {
-    var query = User.findOne({ username: searchUsername });
-
+    var query = User.findOne({ username: searchUsername })
+    query.select("-password")
     query.exec(function (err, user) {
-      if (err) {
-        console.log("Did not find user for username: " + searchUsername);
-        return callback(
-          "Did not find user for username: " + searchUsername,
-          null
-        );
-      } else {
-        if (user) {
-          console.log(`Found username: ${searchUsername}`);
-          callback(null, user);
+        if (err) {
+          console.log("Did not find user for username: " + searchUsername);
+          return callback(
+            "Did not find user for username: " + searchUsername,
+            null
+          );
         } else {
-          if ("admin" == searchUsername) {
-            console.log(
-              "Does not have admin account yet. Create it with default password"
-            );
-            var adminUser = new User();
-            adminUser.username = "admin";
-            adminUser.password = "123";
-            adminUser.email = "Default Admin Account";
-            adminUser.isAdmin = true;
-
-            adminUser.save((err) => {
-              if (err) {
-                console.log("Could not create default admin account: " + err);
-                callback("Could not login to admin account", null);
-              }
-            });
+          if (user) {
+            console.log(`Found username: ${searchUsername}`);
+            callback(null, user);
           } else {
-            console.log("Did not find user for username: " + searchUsername);
-            return callback(
-              "Did not find user for username: " + searchUsername,
-              null
-            );
+            if ("admin" == searchUsername) {
+              console.log(
+                "Does not have admin account yet. Create it with default password"
+              );
+              var adminUser = new User();
+              adminUser.username = "admin";
+              adminUser.password = "123";
+              adminUser.email = "Default Admin Account";
+              adminUser.isAdmin = true;
+
+              adminUser.save((err) => {
+                if (err) {
+                  console.log("Could not create default admin account: " + err);
+                  callback("Could not login to admin account", null);
+                }
+              });
+            } else {
+              console.log("Did not find user for username: " + searchUsername);
+              return callback(
+                "Did not find user for username: " + searchUsername,
+                null
+              );
+            }
           }
         }
-      }
-    });
+      });
   }
 }
 

@@ -1,6 +1,6 @@
 ### create a new comment
 POST http://localhost:8080/comment/create
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg4NjQyNDc2NywiaWF0IjoxNjIxODgwNDI0fQ.E9_odiuubzzM_NUlAlFZ-pz5jUh4cr8DlvcentlFchY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjAyNzE0MDM4NCwiaWF0IjoxNjIyMDIxMTQwfQ.ewuaBJXByn-pKo9HEfIHs6Q4lrRvUYqQqMDHZOiwyu0
 Content-Type: application/json
 
 {
@@ -11,11 +11,11 @@ Content-Type: application/json
 
 ### get all comments to a post
 GET http://localhost:8080/comment/comments
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg4NjQyNDc2NywiaWF0IjoxNjIxODgwNDI0fQ.E9_odiuubzzM_NUlAlFZ-pz5jUh4cr8DlvcentlFchY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjAyNzE0MDM4NCwiaWF0IjoxNjIyMDIxMTQwfQ.ewuaBJXByn-pKo9HEfIHs6Q4lrRvUYqQqMDHZOiwyu0
 Content-Type: application/json
 
 {
-    "post": "60a65f278cbe4e565868b2d3"
+    "post": "60a662240bce15453057a094"
 }
 
 ### update a comment

@@ -70,6 +70,7 @@ function checkSessionToken(req, res, next) {
       userService.findUserBy(username, (err, user) => {
         if (err) res.sendStatus(401);
         if (user) {
+          if(!user.isVerified) return res.status(401).send("Account not verified")
           delete user.password;
           req.user = user;
           next();
