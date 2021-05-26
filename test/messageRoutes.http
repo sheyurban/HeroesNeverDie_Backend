@@ -18,5 +18,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxle
 Content-Type: application/json
 
 {
-    "to": "60a3a36d5f2b5344e4b66a07"
+    "to": "60a406b2a7e9ce3dd856727c"
 }
