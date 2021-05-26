@@ -3,8 +3,9 @@ const bcrypt = require("bcrypt");
 const atob = require("atob");
 const validator = require("../user/ValidationModel");
 const Joi = require("joi");
+const Post = require("../post/PostModel");
 
-// const authService = require("../authentificate/AuthService")
+
 
 function getUsers(callback) {
   User.find((err, users) => {
@@ -88,17 +89,35 @@ function patchPassword(req, res) {
   }
 }
 
-function patchUserdata(req,res){
-
+function patchUserdata(req, res) {
+  try {
+    const { id, username, email } = req.body;
+    User.findByIdAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          username: username,
+          email: email,
+        },
+      },
+      {
+        new: true,
+        useFindAndModify: false,
+      },
+      (err, user) => {
+        if (err) res.sendStatus(400);
+        res.send(user);
+      }
+    );
+  } catch (error) {
+    res.sendStatus(400);
+  }
 }
 
-function isAllowed (req, res, next){
+function isAllowed(req, res, next) {
   try {
-    const {id} = req.body
-  } catch (error) {
-    
-  }
-
+    const { id } = req.body;
+  } catch (error) {}
 }
 
 function deleteUser(req, res) {
@@ -174,4 +193,5 @@ module.exports = {
   createUser,
   patchPassword,
   deleteUser,
+  patchUserdata,
 };

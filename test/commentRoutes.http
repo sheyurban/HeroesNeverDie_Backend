@@ -1,5 +1,6 @@
 ### create a new comment
 POST http://localhost:8080/comment/create
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg4NjQyNDc2NywiaWF0IjoxNjIxODgwNDI0fQ.E9_odiuubzzM_NUlAlFZ-pz5jUh4cr8DlvcentlFchY
 Content-Type: application/json
 
 {
@@ -7,3 +8,34 @@ Content-Type: application/json
     "post": "60a662240bce15453057a094",
     "content": "my first comment"
 }
+
+### get all comments to a post
+GET http://localhost:8080/comment/comments
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg4NjQyNDc2NywiaWF0IjoxNjIxODgwNDI0fQ.E9_odiuubzzM_NUlAlFZ-pz5jUh4cr8DlvcentlFchY
+Content-Type: application/json
+
+{
+    "post": "60a65f278cbe4e565868b2d3"
+}
+
+### update a comment
+PATCH http://localhost:8080/comment/update
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg4NjQyNDc2NywiaWF0IjoxNjIxODgwNDI0fQ.E9_odiuubzzM_NUlAlFZ-pz5jUh4cr8DlvcentlFchY
+Content-Type: application/json
+
+{
+    "id": "60abf0366048b00f3040cf3f",
+    "content": "New content here"
+}
+
+### delete a comment
+DELETE  http://localhost:8080/comment/delete
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg4NjQyNDc2NywiaWF0IjoxNjIxODgwNDI0fQ.E9_odiuubzzM_NUlAlFZ-pz5jUh4cr8DlvcentlFchY
+Content-Type: application/json
+
+{
+    "id": "60abf0366048b00f3040cf3f"
+}
+
+
+

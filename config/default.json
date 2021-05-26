@@ -1,7 +1,7 @@
 {
   "session": {
     "tokenKey": "dadasdas",
-    "timeout": 10
+    "timeout": 100
   },
   "db": {
     "dbConfigOptions": {

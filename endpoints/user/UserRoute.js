@@ -13,9 +13,13 @@ router.get("/", authService.checkSessionToken, (req, res) => {
   });
 });
 
+// deleting user
+router.delete("/user", authService.checkSessionToken, userService.deleteUser);
 
-router.delete("/user", authService.checkSessionToken, userService.deleteUser)
+// get user with id
+router.get("/id", authService.checkSessionToken, userService.getUser);
 
-router.get("/id", userService.getUser)
+// change username and email
+router.patch("/id", authService.checkSessionToken, userService.patchUserdata);
 
 module.exports = router;

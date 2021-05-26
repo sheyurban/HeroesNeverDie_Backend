@@ -1,12 +1,12 @@
 ### post a new post
 POST http://localhost:8080/post/create
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTUyODA4MzQzNSwiaWF0IjoxNjIxNTI3NDgzfQ.MmP37HNTGQ6YabXkHIazIaeoi3cPu5ws7AI3-pphPPI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg2OTM3MDQ0NCwiaWF0IjoxNjIxODY4NzcwfQ.BFCnBtrOreZ0oHiN6BbtfIAfeMhQPQxb_8C5dsisyrY
 Content-Type: application/json
 
 {
     "title": "Hanzo Main Guide",
     "postedBy": "60951807077e3357f084488d",
-    "category": "Discuss",
+    "category": "Guide",
     "tags": [{
         "map": "hanamura",
         "hero": "hanzo"
@@ -15,7 +15,7 @@ Content-Type: application/json
 }
 ### get all posts
 GET http://localhost:8080/post
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTUzODczMzIwNSwiaWF0IjoxNjIxNTM4MTMzfQ.brisbimDm4O_Ukc3ZzBYG8VcWTQhHNysYSADdfhAmv8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg2NTg2NzMwMCwiaWF0IjoxNjIxODY1MjY3fQ.lQy2GLqfR8aafNHBx6qqm2LalczvLXD2pfvTZOZk25c
 
 ### get post by id
 GET http://localhost:8080/post/id
@@ -37,11 +37,11 @@ Content-Type: application/json
 
 ### delete a post
 DELETE http://localhost:8080/post/delete
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTUyODA4MzQzNSwiaWF0IjoxNjIxNTI3NDgzfQ.MmP37HNTGQ6YabXkHIazIaeoi3cPu5ws7AI3-pphPPI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg2ODE4NzY3NCwiaWF0IjoxNjIxODY3NTg3fQ.J8643ByXkDVOgaZ2vVjJwH2vE8JDRBTLFlwVE8k7oKE
 Content-Type: application/json
 
 {
-    "id": "60a6353134e2df2c38d6ebba"
+    "id": "60a65f278cbe4e565868b2d3"
 }
 
 ### update a post
@@ -77,4 +77,14 @@ Content-Type: application/json
 
 ### get latest posts for home view
 GET http://localhost:8080/post/home
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTUyODA4MzQzNSwiaWF0IjoxNjIxNTI3NDgzfQ.MmP37HNTGQ6YabXkHIazIaeoi3cPu5ws7AI3-pphPPI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg2ODE4NzY3NCwiaWF0IjoxNjIxODY3NTg3fQ.J8643ByXkDVOgaZ2vVjJwH2vE8JDRBTLFlwVE8k7oKE
+
+### get latest posts for home view
+GET http://localhost:8080/post/filter
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg3NjcyNzg2OSwiaWF0IjoxNjIxODcwNzI3fQ.e5W7jK2xGMnzpkOBKv6q_XBt8l0bzkbGL2bUOJmAH_s
+Content-Type: application/json
+
+{
+    "tags": [{"map": "hanamura"}],
+    "category": "Discus"
+}

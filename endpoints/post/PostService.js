@@ -1,5 +1,4 @@
 const Post = require("./PostModel");
-const Comment = require("../comment/CommentModel");
 
 async function getPost(req, res) {
   try {
@@ -58,9 +57,16 @@ function createPost(req, res) {
 function deletePost(req, res) {
   try {
     const { id } = req.body;
-    Post.deleteOne({ _id: id }, (err) => {
-      if (err) return res.sendStatus(400);
-      res.sendStatus(200);
+    Post.findById({ _id: id }, (err, post) => {
+      if (err || !post) return res.sendStatus(400);
+      if (req.user.id == post.postedBy || req.user.isAdmin) {
+        Post.deleteOne({ _id: id }, (err) => {
+          if (err) return res.sendStatus(400);
+          res.sendStatus(200);
+        });
+      } else {
+        res.sendStatus(401);
+      }
     });
   } catch (error) {
     res.sendStatus(400);
@@ -84,7 +90,7 @@ function updatePost(req, res) {
         useFindAndModify: false,
       },
       (err, post) => {
-        if (err) res.sendStatus(400);
+        if (err) return res.sendStatus(400);
         res.send(post);
       }
     );
@@ -138,14 +144,33 @@ function getLikesOfUser(req, res) {
 
 function getHome(req, res) {
   try {
-    let query = Post.find(
-      { category: { $in: ["Guide", "Discuss"] } },
+    Post.find({ category: { $in: ["Guide", "Discuss"] } }, (err, posts) => {
+      if (err) return res.sendStatus(400);
+      res.send(posts);
+    });
+  } catch (error) {
+    res.sendStatus(400);
+  }
+}
+
+function getFilteredPosts(req, res) {
+  try {
+    const { tags, category } = req.body;
+    console.log(typeof tags);
+    Post.find(
+      {
+        tags: { $elemMatch: tags[0] },
+        category: { $in: [category] },
+      },
+
       (err, posts) => {
         if (err) return res.sendStatus(400);
         res.send(posts);
       }
     );
-  } catch (error) {}
+  } catch (error) {
+    res.sendStatus(400);
+  }
 }
 
 module.exports = {
@@ -158,4 +183,5 @@ module.exports = {
   addLike,
   getLikesOfUser,
   getHome,
+  getFilteredPosts,
 };
