@@ -8,7 +8,7 @@ const authService = require("./AuthService");
 const userService = require("../user/UserService");
 const User = require("../user/UserModel");
 
-router.post("/loginBasic", (req, res, next) => {
+router.post("/login", (req, res, next) => {
   logger.debug("Want to create token");
   try {
     let loginData = req.get("Authorization");

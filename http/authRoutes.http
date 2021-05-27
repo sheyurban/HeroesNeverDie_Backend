@@ -1,6 +1,6 @@
 ###
 
-POST https://localhost:8080/authenticate/loginBasic
+POST https://localhost:8080/authenticate/login
 Authorization: Basic U2hpcmxleTpxd2VydHk=
 
 ###

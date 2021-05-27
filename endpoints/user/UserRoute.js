@@ -48,7 +48,6 @@ router.get("/id", (req, res) => {
   try {
     const token = req.get("Authorization");
     authService.checkSessionToken(token, (err, user) => {
-      logger.debug(user);
       if (err) return res.status(400).send(err);
 
       const { id } = req.body;
@@ -86,7 +85,7 @@ router.post("/register", (req, res) => {
     const userData = req.body;
     userService.createUser(userData, (err, result) => {
       if (err) return res.status(400).send(err);
-      res.send(result);
+      res.status(201).send(result);
     });
   } catch (error) {
     res.status(500);
