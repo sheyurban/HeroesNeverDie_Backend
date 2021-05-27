@@ -2,17 +2,9 @@ const app = require("../index"); // Link to your server file
 const request = require("supertest");
 const User = require("../endpoints/user/UserModel");
 const logger = require("../config/winston");
+const { close } = require("../database/db");
 let authToken = "";
 let user = {};
-
-// beforeEach(async () => {
-//   console.log("beforeEach");
-//   // await User.deleteMany({});
-// });
-
-// afterEach(() => {
-//   console.log("afterEach");
-// });
 
 test("should create user", async () => {
   await request(app)
@@ -56,6 +48,7 @@ test("should get user", async () => {
     .expect(200);
 });
 
-test("should delete all users", async () => {
+afterAll(async () => {
   await User.deleteMany({});
-});
+  close();
+  });

@@ -4004,3 +4004,13 @@ Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the cli
 2021-05-27T18:28:28.355Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
 2021-05-27T18:39:29.704Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
 2021-05-27T18:39:40.883Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
+2021-05-27T18:53:02.321Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
+2021-05-27T18:53:13.278Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
+2021-05-27T18:53:24.926Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
+2021-05-27T18:54:30.412Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
+2021-05-27T19:03:35.827Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
+2021-05-27T19:23:18.987Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
+2021-05-27T19:23:36.273Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
+2021-05-27T19:27:02.822Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
+2021-05-27T19:27:31.861Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
+2021-05-27T19:27:42.501Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}

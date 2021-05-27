@@ -36,7 +36,9 @@ function getDb() {
 }
 
 function close() {
-  logger.debug("Function still missing. (db.close())");
+  // logger.debug("Function still missing. (db.close())");
+  _db.close()
+  logger.debug("Database closed");
 }
 
-module.exports = { getDb, initDb };
+module.exports = { getDb, initDb, close };
