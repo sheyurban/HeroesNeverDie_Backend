@@ -11,7 +11,6 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      select: false
     },
     email: {
       type: String,
@@ -29,8 +28,8 @@ const UserSchema = new mongoose.Schema(
     },
     token: {
       type: String,
-      default: mongoose.Types.ObjectId()
-    }
+      default: mongoose.Types.ObjectId(),
+    },
   },
   { timestamps: true }
 );

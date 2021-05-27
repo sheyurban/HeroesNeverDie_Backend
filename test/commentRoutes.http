@@ -1,40 +1,39 @@
 ### create a new comment
-POST http://localhost:8080/comment/create
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjAyNzE0MDM4NCwiaWF0IjoxNjIyMDIxMTQwfQ.ewuaBJXByn-pKo9HEfIHs6Q4lrRvUYqQqMDHZOiwyu0
+POST https://localhost:8080/comment/create
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyMjYzNTQ2NywiaWF0IjoxNjIyMTE2NjM1fQ.ADVhMVE77a-oDb6SAEPasAlzvYkCpiEoVn7DshzzJV8
 Content-Type: application/json
 
 {
-    "postedBy": "60951807077e3357f084488d",
     "post": "60a662240bce15453057a094",
     "content": "my first comment"
 }
 
 ### get all comments to a post
-GET http://localhost:8080/comment/comments
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjAyNzE0MDM4NCwiaWF0IjoxNjIyMDIxMTQwfQ.ewuaBJXByn-pKo9HEfIHs6Q4lrRvUYqQqMDHZOiwyu0
+GET https://localhost:8080/comment/comments
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyMjYzNTQ2NywiaWF0IjoxNjIyMTE2NjM1fQ.ADVhMVE77a-oDb6SAEPasAlzvYkCpiEoVn7DshzzJV8
 Content-Type: application/json
 
 {
-    "post": "60a662240bce15453057a094"
+    "post": "60a662240bce15453057a09"
 }
 
 ### update a comment
-PATCH http://localhost:8080/comment/update
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg4NjQyNDc2NywiaWF0IjoxNjIxODgwNDI0fQ.E9_odiuubzzM_NUlAlFZ-pz5jUh4cr8DlvcentlFchY
+PATCH https://localhost:8080/comment/update
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyMjYzNTQ2NywiaWF0IjoxNjIyMTE2NjM1fQ.ADVhMVE77a-oDb6SAEPasAlzvYkCpiEoVn7DshzzJV8
 Content-Type: application/json
 
 {
-    "id": "60abf0366048b00f3040cf3f",
+    "id": "60af8ca199ab6750188c3909",
     "content": "New content here"
 }
 
 ### delete a comment
-DELETE  http://localhost:8080/comment/delete
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg4NjQyNDc2NywiaWF0IjoxNjIxODgwNDI0fQ.E9_odiuubzzM_NUlAlFZ-pz5jUh4cr8DlvcentlFchY
+DELETE  https://localhost:8080/comment/delete
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyMjYzNTQ2NywiaWF0IjoxNjIyMTE2NjM1fQ.ADVhMVE77a-oDb6SAEPasAlzvYkCpiEoVn7DshzzJV8
 Content-Type: application/json
 
 {
-    "id": "60abf0366048b00f3040cf3f"
+    "id": "60af8bf4bbc03d3d445a5617"
 }
 
 

@@ -1,22 +1,16 @@
-POST http://localhost:8080/message/create
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjAyMTExNDEyNCwiaWF0IjoxNjIyMDE1MTE0fQ.-qU0LjzcBoIG5w-MIy4DAQ8U_tAgvmr_nIMxoGBhVHw
+POST https://localhost:8080/message/create
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyNTIwMTc0MSwiaWF0IjoxNjIyMTE5MjAxfQ.v3mTtode1hQhw2YeYj96oBLPQ2wLTnSCWgIWboxIXI0
 Content-Type: application/json
 
 {
     "to": [
-      "60951807077e3357f084488d",
+      "60af76903d30511694031f48",
       "60a406b2a7e9ce3dd856727c"      
     ],
-    "content": "Hey, wie gehts?",
-    "by": "60a3a36d5f2b5344e4b66a07"
+    "content": "Hey, wie gehts?"
 }
 
-###
+### get messages of logged in user
+GET https://localhost:8080/message
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyNTIwMTc0MSwiaWF0IjoxNjIyMTE5MjAxfQ.v3mTtode1hQhw2YeYj96oBLPQ2wLTnSCWgIWboxIXI0
 
-GET http://localhost:8080/message
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjAyMTExNDEyNCwiaWF0IjoxNjIyMDE1MTE0fQ.-qU0LjzcBoIG5w-MIy4DAQ8U_tAgvmr_nIMxoGBhVHw
-Content-Type: application/json
-
-{
-    "to": "60a406b2a7e9ce3dd856727c"
-}

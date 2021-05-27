@@ -1,5 +1,7 @@
 const express = require("express");
 const fileUpload = require("express-fileupload");
+var logger = require("./config/winston");
+
 
 // database
 
@@ -10,9 +12,9 @@ const database = require("./database/db");
 const userRoutes = require("./endpoints/user/UserRoute");
 const fileUploadRoutes = require("./endpoints/fileUplodad/FileUploadRoute");
 const authRoutes = require("./endpoints/authentificate/AuthRoute");
-const postRoutes = require("./endpoints/post/PostRoute")
-const commentRoutes = require("./endpoints/comment/CommentRoute")
-const messageRoutes = require("./endpoints/message/MessageRoute")
+const postRoutes = require("./endpoints/post/PostRoute");
+const commentRoutes = require("./endpoints/comment/CommentRoute");
+const messageRoutes = require("./endpoints/message/MessageRoute");
 
 const app = express();
 app.use(express.json());
@@ -30,18 +32,16 @@ app.use(
 
 /* Adding the routes */
 
-
-
 app.use("/users", userRoutes);
 app.use("/authenticate", authRoutes);
 app.use("/fileUpload", fileUploadRoutes);
-app.use("/post", postRoutes)
-app.use("/comment", commentRoutes)
-app.use("/message", messageRoutes)
+app.use("/post", postRoutes);
+app.use("/comment", commentRoutes);
+app.use("/message", messageRoutes);
 
 database.initDb((err, db) => {
-  if (db) console.log("Anbindung von Datenbank erfolgreich");
-  else console.log("Anbindung von Datenbank gescheitert");
+  if (db) logger.debug("Anbindung von Datenbank erfolgreich");
+  else logger.error("Anbindung von Datenbank gescheitert");
 });
 
 /*Error handler */
@@ -54,10 +54,4 @@ app.use((req, res, next) => {
   res.status(404).send("Sorry, can't find that! This URL is not supported.");
 });
 
-
-
-
-
 module.exports = app;
-
-

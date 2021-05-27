@@ -1,29 +1,62 @@
 GET https://localhost:8080/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjA2MDI1ODQ3NCwiaWF0IjoxNjIyMDU0MjU4fQ.UKpl8jZlYR7_dHpbIimU3f6x6pr96syMFn5Ardt4aiA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjExNDU0NDg1MCwiaWF0IjoxNjIyMTA4NTQ0fQ.QOA7Cn-ueFV-8ZZBHeLjIwwKp2LiITu0cTHdTmNMHGE
 
 ###
 
-DELETE http://localhost:8080/users/user?id=60951807077e3357f084488d
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTU4OTkwOTkxNywiaWF0IjoxNjIxNTg5MzA5fQ.cANB6Dz7fzEA6PG5jCALtYVM-QJefdArATgZ4HlbWKg
-
-### get one user
-
-GET http://localhost:8080/users/id
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTU4OTkwOTkxNywiaWF0IjoxNjIxNTg5MzA5fQ.cANB6Dz7fzEA6PG5jCALtYVM-QJefdArATgZ4HlbWKg
+DELETE https://localhost:8080/users/delete
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjExMDg1MzYyMSwiaWF0IjoxNjIyMTA0ODUzfQ.-8YaxaTj6_9VlwZZBoR2mFf_Ofht-tO0eAn3eFt5byg
 Content-Type: application/json
 
 {
-    "id": "60a3a36d5f2b5344e4b66a07"   
+    "id": "60af57433fd1c309ec4f5141"   
+}
+
+
+### get one user
+GET https://localhost:8080/users/id
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjExNDU0NDg1MCwiaWF0IjoxNjIyMTA4NTQ0fQ.QOA7Cn-ueFV-8ZZBHeLjIwwKp2LiITu0cTHdTmNMHG
+Content-Type: application/json
+
+{
+    "id": "60af6953f374021e183b8c0"   
 }
 
 ### 
 
-PATCH http://localhost:8080/users/id
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTU4OTkwOTkxNywiaWF0IjoxNjIxNTg5MzA5fQ.cANB6Dz7fzEA6PG5jCALtYVM-QJefdArATgZ4HlbWKg
+PATCH https://localhost:8080/users/id
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjExNTk5MzI1MCwiaWF0IjoxNjIyMTA5OTkzfQ.0sNzAu68KOJZZ24EQpZxeHW68OvGVuiquXxxGbLUaW4
 Content-Type: application/json
 
 {
-    "id": "60a3a36d5f2b5344e4b66a07",
-    "username": "Shirley",
+    "id": "60af6953f374021e183b8c0f",
+    "username": "Shirley1",
     "email": "haha@haha.com"   
+}
+
+###
+POST https://localhost:8080/users/register
+Content-Type: application/json
+
+{
+    "username": "Shirley",
+    "password": "qwerty",
+    "email": "shirleyurban@outlook.de"
+}
+###
+
+PATCH https://localhost:8080/users/resetPassword
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEzMzUxNDcwMiwiaWF0IjoxNjIyMTI3NTE0fQ.GS4jACJMcMyxhf_oXPSeY4mHdczL294iWsWXstlPjZk
+Content-Type: application/json
+
+{
+    "newPw": "ewoibmV3UHciOiJxd2VyMTIzMTIzdHp1aW9wIgp9"   
+}
+###
+
+PATCH https://localhost:8080/users/admin
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEzMzUxNDcwMiwiaWF0IjoxNjIyMTI3NTE0fQ.GS4jACJMcMyxhf_oXPSeY4mHdczL294iWsWXstlPjZk
+Content-Type: application/json
+
+{
+    "id": "60ae9dc013ce7351d0fa3905"   
 }

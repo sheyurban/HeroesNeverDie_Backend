@@ -7,105 +7,72 @@ const Post = require("../post/PostModel");
 const hbs = require("handlebars");
 const mail = require("../email/mail");
 const fs = require("fs");
+var logger = require("../../config/winston");
 
 function getUsers(callback) {
   User.find((err, users) => {
     if (err) {
-      console.log("Fehler bei Suche: " + err);
+      logger.error("Fehler bei Suche: " + err);
       return callback(err, null);
     } else {
-      console.log("Alles super");
       return callback(null, users);
     }
   });
 }
 
-function getUser(req, res) {
+function getUser(id, callback) {
   try {
-    const { id } = req.body;
     User.findById({ _id: id }, (err, user) => {
-      if (err) return res.sendStatus(400);
+      if (err) return callback("Couldnt find user", null);
       const { id, username, email, ...partialObject } = user;
       const subset = { id, username, email };
-      res.send(subset);
+      return callback(null, subset);
     });
-  } catch (error) {}
+  } catch (error) {
+    return callback("Something went wrong", null);
+  }
 }
 
-async function createUser(req, res) {
+async function createUser(userData, callback) {
   try {
-    const data = req.body;
-
     // Check if all values are accepted
-    validateNewUser(data, (err) => {
-      if (err) return res.status(400).send(err.details[0].message);
-      console.log(data)
+    validateNewUser(userData, (err) => {
+      if (err) return callback(err.details[0].message, null);
 
       // Check if username or email is already used
-      User.find({username: data.username}, (err, user) => {
-        if (!err) { 
-          console.log(user[0])
-          if (user.email == data.email) {
-            return res.status(400).send({ error: "E-Mail already in use." });
-          } else if (user.username == data.username) {
-            return res.status(400).send({ error: "Username already in use." });
+      User.find({ username: userData.username }, (err, user) => {
+        if (!err) {
+          if (user.email == userData.email) {
+            return callback({ error: "E-Mail already in use." }, null);
+          } else if (user.username == userData.username) {
+            return callback({ error: "Username already in use." }, null);
           }
         }
 
         // Save new User in database, password will be hashed pre save
-        const newUser = new User(data);
+        const newUser = new User(userData);
         newUser.save((err, document) => {
           if (err)
-            res.status(400).send({ error: "Account couldn't be created." });
+            return callback({ error: "Account couldn't be created." }, null);
           else {
             const filePath = "./endpoints/email/register.html";
             const source = fs.readFileSync(filePath, "utf-8").toString();
             const template = hbs.compile(source);
             const replacements = {
               user: document.username,
-              link: `https://localhost:8080/verify?token=${document.token}`
+              link: `https://localhost:8080/authenticate/verify?token=${document.token}`,
             };
             const htmlSite = template(replacements);
             mail.sendMail(document.email, "Activate Account", htmlSite);
             delete document.password;
-            res.sendStatus(201)
+            return callback(null, "Created User, started verifying process");
           }
         });
-      })
-
-      // findUserBy(data.username, (err, user) => {
-      //   if (!err) {
-      //     if (user.email == data.email) {
-      //       return res.status(400).send({ error: "E-Mail already in use." });
-      //     } else if (user.username == data.username) {
-      //       return res.status(400).send({ error: "Username already in use." });
-      //     }
-      //   }
-
-      //   // Save new User in database, password will be hashed pre save
-      //   const newUser = new User(data);
-      //   newUser.save((err, document) => {
-      //     if (err)
-      //       res.status(400).send({ error: "Account couldn't be created." });
-      //     else {
-      //       console.log(document);
-      //       const filePath = "./endpoints/email/register.html";
-      //       const source = fs.readFileSync(filePath, "utf-8").toString();
-      //       const template = hbs.compile(source);
-      //       const replacements = {
-      //         user: document.username,
-      //       };
-      //       const htmlSite = template(replacements);
-      //       mail.sendMail(document.email, "Activate Account", htmlSite);
-      //       delete document.password;
-      //       res.status(201).send(document);
-      //     }
-      //   });
-      // });
+      });
     });
   } catch (error) {
     console.log({ error });
-    res.status(400).send({ error: "CatchBlock: Account couldn't be created." });
+    return callback("Something went wrong", null);
   }
 }
 
@@ -119,24 +86,23 @@ function validateNewUser(userData, callback) {
   callback(error);
 }
 
-function patchPassword(req, res) {
+function patchPassword(newPw, user, callback) {
   try {
-    let { newPw } = JSON.parse(atob(req.body.newPw));
-    req.user.password = newPw;
-    const user = new User(req.user);
+    user.password = JSON.parse(atob(newPw));
+    const newUser = new User(user);
 
-    user.save();
-
-    res.sendStatus(200);
+    newUser.save((err, document) => {
+      if (err)
+        return callback({ error: "New Password couldn't be saved." }, null);
+      else return callback(null, document);
+    });
   } catch (error) {
-    console.log({ error });
-    res.sendStatus(400);
+    return callback("Something went wrong", null);
   }
 }
 
-function patchUserdata(req, res) {
+function patchUserdata(id, username, email, callback) {
   try {
-    const { id, username, email } = req.body;
     User.findByIdAndUpdate(
       { _id: id },
       {
@@ -150,84 +116,99 @@ function patchUserdata(req, res) {
         useFindAndModify: false,
       },
       (err, user) => {
-        if (err) res.sendStatus(400);
-        res.send(user);
+        if (err) return callback("Couldnt patch userdata", null);
+        callback(null, user);
       }
     );
   } catch (error) {
-    res.sendStatus(400);
+    callback("Something went wrong", null);
   }
 }
 
-function isAllowed(req, res, next) {
+function deleteUser(user, deleteUserId, callback) {
   try {
-    const { id } = req.body;
-  } catch (error) {}
-}
-
-function deleteUser(req, res) {
-  try {
-    const deleteUsername = req.query.id;
-    const user = req.user;
-
-    if (user.isAdmin || user.username == deleteUsername) {
-      findUserBy(user.username, (user) => {
-        User.deleteOne({ username: user.username });
+    if (user.isAdmin || user._id == deleteUserId) {
+      User.findByIdAndDelete({ _id: user._id }, (err) => {
+        if (err) return callback("Couldnt delete user", null);
+        return callback(null, "successful deleted user: " + user.username);
       });
     } else {
-      throw Error();
+      return callback("Not authorized", null);
     }
   } catch (error) {
-    res.sendStatus(400);
+    return callback("Something went wrong", null);
   }
 }
 
 function findUserBy(searchUsername, callback) {
-  console.log("UserService: find User by ID " + searchUsername);
+  logger.debug("UserService: find User by ID " + searchUsername);
   if (!searchUsername) {
     callback("username is missing");
     return;
   } else {
-    var query = User.findOne({ username: searchUsername })
-    query.select("-password")
+    var query = User.findOne({ username: searchUsername });
     query.exec(function (err, user) {
-        if (err) {
-          console.log("Did not find user for username: " + searchUsername);
-          return callback(
-            "Did not find user for username: " + searchUsername,
-            null
-          );
+      if (err) {
+        logger.error("Did not find user for username: " + searchUsername);
+        return callback(
+          "Did not find user for username: " + searchUsername,
+          null
+        );
+      } else {
+        if (user) {
+          logger.debug(`Found username: ${searchUsername}`);
+          callback(null, user);
         } else {
-          if (user) {
-            console.log(`Found username: ${searchUsername}`);
-            callback(null, user);
-          } else {
-            if ("admin" == searchUsername) {
-              console.log(
-                "Does not have admin account yet. Create it with default password"
-              );
-              var adminUser = new User();
-              adminUser.username = "admin";
-              adminUser.password = "123";
-              adminUser.email = "Default Admin Account";
-              adminUser.isAdmin = true;
+          if ("admin" == searchUsername) {
+            logger.debug(
+              "Does not have admin account yet. Create it with default password"
+            );
+            var adminUser = new User();
+            adminUser.username = "admin";
+            adminUser.password = "123";
+            adminUser.email = "Default Admin Account";
+            adminUser.isAdmin = true;
 
-              adminUser.save((err) => {
-                if (err) {
-                  console.log("Could not create default admin account: " + err);
-                  callback("Could not login to admin account", null);
-                }
-              });
-            } else {
-              console.log("Did not find user for username: " + searchUsername);
-              return callback(
-                "Did not find user for username: " + searchUsername,
-                null
-              );
-            }
+            adminUser.save((err) => {
+              if (err) {
+                logger.error("Could not create default admin account: " + err);
+                callback("Could not login to admin account", null);
+              }
+            });
+          } else {
+            logger.error("Did not find user for username: " + searchUsername);
+            return callback(
+              "Did not find user for username: " + searchUsername,
+              null
+            );
           }
         }
-      });
+      }
+    });
+  }
+}
+
+function makeUserToAdmin(id, user, callback) {
+  try {
+    if (user.isAdmin) {
+      User.findOneAndUpdate(
+        { _id: id },
+        { isAdmin: true },
+        {
+          new: true,
+          useFindAndModify: false,
+        },
+        (err, user) => {
+          // if user found, set isVerified to true
+          if (err || !user) return callback(err, null);
+          return callback(null, user);
+        }
+      );
+    } else {
+      return callback("Not authorized", null);
+    }
+  } catch (error) {
+    return callback("Something went wrong", null);
   }
 }
 
@@ -239,4 +220,5 @@ module.exports = {
   patchPassword,
   deleteUser,
   patchUserdata,
+  makeUserToAdmin,
 };

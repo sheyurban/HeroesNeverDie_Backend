@@ -1,11 +1,10 @@
 ### post a new post
-POST http://localhost:8080/post/create
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg2OTM3MDQ0NCwiaWF0IjoxNjIxODY4NzcwfQ.BFCnBtrOreZ0oHiN6BbtfIAfeMhQPQxb_8C5dsisyrY
+POST https://localhost:8080/post/create
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyODgwMDE0NSwiaWF0IjoxNjIyMTIyODAwfQ.mT9ul7UYf-snpuUFO18Ywyn1ueADQBRie9ojr_Sff24
 Content-Type: application/json
 
 {
     "title": "Hanzo Main Guide",
-    "postedBy": "60951807077e3357f084488d",
     "category": "Guide",
     "tags": [{
         "map": "hanamura",
@@ -14,12 +13,12 @@ Content-Type: application/json
     "content": "Awesome content here..."
 }
 ### get all posts
-GET http://localhost:8080/post
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg2NTg2NzMwMCwiaWF0IjoxNjIxODY1MjY3fQ.lQy2GLqfR8aafNHBx6qqm2LalczvLXD2pfvTZOZk25c
+GET https://localhost:8080/post
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyODgwMDE0NSwiaWF0IjoxNjIyMTIyODAwfQ.mT9ul7UYf-snpuUFO18Ywyn1ueADQBRie9ojr_Sff24
 
 ### get post by id
-GET http://localhost:8080/post/id
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTUyODA4MzQzNSwiaWF0IjoxNjIxNTI3NDgzfQ.MmP37HNTGQ6YabXkHIazIaeoi3cPu5ws7AI3-pphPPI
+GET https://localhost:8080/post/id
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyODgwMDE0NSwiaWF0IjoxNjIyMTIyODAwfQ.mT9ul7UYf-snpuUFO18Ywyn1ueADQBRie9ojr_Sff24
 Content-Type: application/json
 
 {
@@ -27,8 +26,8 @@ Content-Type: application/json
 }
 
 ### get all posts of a user
-GET http://localhost:8080/post/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTUyODA4MzQzNSwiaWF0IjoxNjIxNTI3NDgzfQ.MmP37HNTGQ6YabXkHIazIaeoi3cPu5ws7AI3-pphPPI
+GET https://localhost:8080/post/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyODgwMDE0NSwiaWF0IjoxNjIyMTIyODAwfQ.mT9ul7UYf-snpuUFO18Ywyn1ueADQBRie9ojr_Sff24
 Content-Type: application/json
 
 {
@@ -36,51 +35,49 @@ Content-Type: application/json
 }
 
 ### delete a post
-DELETE http://localhost:8080/post/delete
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTg2ODE4NzY3NCwiaWF0IjoxNjIxODY3NTg3fQ.J8643ByXkDVOgaZ2vVjJwH2vE8JDRBTLFlwVE8k7oKE
+DELETE https://localhost:8080/post/delete
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyODgwMDE0NSwiaWF0IjoxNjIyMTIyODAwfQ.mT9ul7UYf-snpuUFO18Ywyn1ueADQBRie9ojr_Sff24
 Content-Type: application/json
 
 {
-    "id": "60a65f278cbe4e565868b2d3"
+    "id": "60afa9e8cd7948345443c0e6"
 }
 
 ### update a post
-PATCH http://localhost:8080/post/update
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTUyODA4MzQzNSwiaWF0IjoxNjIxNTI3NDgzfQ.MmP37HNTGQ6YabXkHIazIaeoi3cPu5ws7AI3-pphPPI
+PATCH https://localhost:8080/post/update
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyODgwMDE0NSwiaWF0IjoxNjIyMTIyODAwfQ.mT9ul7UYf-snpuUFO18Ywyn1ueADQBRie9ojr_Sff24
 Content-Type: application/json
 
 {
-    "id": "60a63ad30f63d443f84eaa4f",
+    "id": "60afa32e2a386d5270f3dd5b",
     "title": "Genji Main Guide",
     "tags": [{"map": "route66", "hero": "hanzo"}],
     "content": "Awesome content here..."
 }
 
 ### add a like to post 
-PATCH http://localhost:8080/post/like
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTUyODA4MzQzNSwiaWF0IjoxNjIxNTI3NDgzfQ.MmP37HNTGQ6YabXkHIazIaeoi3cPu5ws7AI3-pphPPI
+PATCH https://localhost:8080/post/like
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyODgwMDE0NSwiaWF0IjoxNjIyMTIyODAwfQ.mT9ul7UYf-snpuUFO18Ywyn1ueADQBRie9ojr_Sff24
 Content-Type: application/json
 
 {
-    "idUser": "60951807077e3357f084488d",
-    "idPost": "60a662240bce15453057a094"
+    "idPost": "60afa32e2a386d5270f3dd5b"
 }
 
 ### get all posts a user likes
-GET http://localhost:8080/post/like
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMTUyODA4MzQzNSwiaWF0IjoxNjIxNTI3NDgzfQ.MmP37HNTGQ6YabXkHIazIaeoi3cPu5ws7AI3-pphPPI
+GET https://localhost:8080/post/like
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyODgwMDE0NSwiaWF0IjoxNjIyMTIyODAwfQ.mT9ul7UYf-snpuUFO18Ywyn1ueADQBRie9ojr_Sff24
 Content-Type: application/json
 
 {
-    "id": "60951807077e3357f084488d"
+    "id": "60af76903d30511694031f48"
 }
 
 ### get latest posts for home view
-GET http://localhost:8080/post/home
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjAzMjU2Mzk5NCwiaWF0IjoxNjIyMDI2NTYzfQ.fz0Kkzp-ChI2tecboYSiOELk3vidaj0Y1I_yixVXqHI
+GET https://localhost:8080/post/home
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyODgwMDE0NSwiaWF0IjoxNjIyMTIyODAwfQ.mT9ul7UYf-snpuUFO18Ywyn1ueADQBRie9ojr_Sff24
 
-###
-GET http://localhost:8080/post/test
+
 
 
 

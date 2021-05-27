@@ -2,6 +2,7 @@ var userService = require("../user/UserService");
 var config = require("config");
 var jwt = require("jsonwebtoken");
 var logger = require("../../config/winston");
+const User = require("../user/UserModel");
 
 function createSessionToken(props, callback) {
   logger.debug("AuthService: create Token");
@@ -10,13 +11,11 @@ function createSessionToken(props, callback) {
     callback("JSON-Body missing", null, null);
     return;
   }
-
+  logger.debug("Props: " + props);
   userService.findUserBy(props.username, (err, user) => {
     if (user) {
       logger.debug("Found user, check the password");
-
-      console.log(user);
-
+      if (!user.isVerified) return callback("User not verified", null);
       user.comparePassword(props.password, (err, isMatch) => {
         if (err) {
           logger.error("Password is invalid");
@@ -53,36 +52,57 @@ function createSessionToken(props, callback) {
   });
 }
 
-function checkSessionToken(req, res, next) {
-  console.log("Check if token is okay");
+function checkSessionToken(authData, callback) {
+  logger.debug("Check if token is okay");
   try {
-    let token = req.get("Authorization");
-    
+    let token = authData;
     token = token.replace("Bearer ", "");
     const privateKey = config.get("session.tokenKey");
     const decoded = jwt.verify(token, privateKey, {
       algorithm: "HS256",
     });
     if (Date.now() >= decoded.exp) {
-      res.status(401).send("Token already expired");
+      return callback("Token already expired", null);
     } else {
       const username = decoded.user;
       userService.findUserBy(username, (err, user) => {
-        if (err) res.sendStatus(401);
+        if (err) return callback("User not found", null);
         if (user) {
-          if(!user.isVerified) return res.status(401).send("Account not verified")
+          if (!user.isVerified) return callback("Account not verified", null);
           delete user.password;
-          req.user = user;
-          next();
+          return callback(null, user);
         }
       });
     }
   } catch (error) {
-    res.sendStatus(401);
+    return callback("Something went wrong", null);
   }
+}
+
+function verifyUser(token, callback) {
+  User.findOne({ token }, (err, user) => {
+    if (err || !user ) return callback(err, null);
+    else if (user.isVerified)
+      return callback("User is already verified.", null);
+
+    User.findOneAndUpdate(
+      { token: token },
+      { isVerified: true },
+      {
+        new: true,
+        useFindAndModify: false,
+      },
+      (err, user) => {
+        // if user found, set isVerified to true
+        if (err || !user) return callback(err, null);
+        return callback(null, user);
+      }
+    );
+  });
 }
 
 module.exports = {
   createSessionToken,
   checkSessionToken,
+  verifyUser,
 };

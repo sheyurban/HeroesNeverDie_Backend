@@ -1,12 +1,16 @@
 const Post = require("../post/PostModel");
 const Comment = require("./CommentModel");
 
-function createComment(req, res) {
+function createComment(user, content, post, callback) {
   try {
-    const comment = req.body;
+    const comment = {
+      postedBy: user,
+      content: content,
+      post: post,
+    };
     const newComment = new Comment(comment);
     newComment.save((err, document) => {
-      if (err) res.status(400).send({ error: "Comment couldn't be created." });
+      if (err) return callback({ error: "Comment couldn't be created." }, null);
       else {
         Post.findByIdAndUpdate(
           { _id: newComment.post },
@@ -20,37 +24,35 @@ function createComment(req, res) {
             useFindAndModify: false,
           },
           (err, post) => {
-            if (err) return res.sendStatus(400);
-            res.status(201).send(document);
+            if (err || !post) return callback(err, null);
+            return callback(null, document);
           }
         );
       }
     });
   } catch (error) {
-    res.status(500);
+    return "Something went wrong", null;
   }
 }
 
-function getComments(req, res) {
+function getComments(post, callback) {
   try {
-    const { post } = req.body;
     Comment.find({ post: post })
       .populate("postedBy", ["username", "_id"])
       .exec((err, comments) => {
-        if (err) return res.sendStatus(400);
-        res.send(comments);
+        if (err) return callback("Couldnt find comments", null);
+        return callback(null, comments);
       });
   } catch (error) {
-    res.status(500);
+    return callback("Something went wrong", null);
   }
 }
 
-function updateComment(req, res) {
+function updateComment(id, content, user, callback) {
   try {
-    const { id, content } = req.body;
     Comment.findById({ _id: id }, (err, comment) => {
-      if (err) return res.sendStatus(400);
-      if (req.user.id == comment.postedBy || req.user.isAdmin) {
+      if (err || !comment) return callback("Couldnt find comment", null);
+      if (user.id == comment.postedBy || user.isAdmin) {
         Comment.findByIdAndUpdate(
           { _id: id },
           {
@@ -60,35 +62,34 @@ function updateComment(req, res) {
           },
           { new: true, useFindAndModify: false },
           (err, comment) => {
-            if (err) return res.sendStatus(400);
-            res.send(comment);
+            if (err) return callback("Couldnt update comment", null);
+            return callback(null, comment);
           }
         );
       } else {
-        res.sendStatus(401);
+        return callback("Unauthorized", null);
       }
     });
   } catch (error) {
-    res.status(500);
+    return callback("Something went wrong", null);
   }
 }
 
-function deleteComment(req, res) {
+function deleteComment(id, user, callback) {
   try {
-    const { id } = req.body;
     Comment.findById({ _id: id }, (err, comment) => {
-      if (err || !comment) return res.sendStatus(400);
-      if (req.user.id == comment.postedBy || req.user.isAdmin) {
+      if (err || !comment) return callback("Couldnt find this comment", null);
+      if (user.id == comment.postedBy || user.isAdmin) {
         Comment.deleteOne({ _id: id }, (err) => {
-          if (err) return res.sendStatus(400);
-          res.sendStatus(200);
+          if (err) return callback("Couldnt delete this comment", null);
+          return callback(null, comment);
         });
       } else {
-        res.sendStatus(401);
+        return callback("Unauthorized", null);
       }
     });
   } catch (error) {
-    res.status(500);
+    return callback("Something went wrong", null);
   }
 }
 

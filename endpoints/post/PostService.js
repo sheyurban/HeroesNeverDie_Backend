@@ -1,120 +1,126 @@
 const Post = require("./PostModel");
 var logger = require("../../config/winston");
+const { post } = require("../..");
 
-
-async function getPost(req, res) {
+async function getPost(id, callback) {
   try {
-    const { id } = req.body;
-
     Post.findOne({ _id: id })
       .populate("likes", ["username", "_id"])
+      .populate("comments", ["content", "_id"])
       .exec((err, post) => {
-        if (err) return res.send(400);
-        res.send(post);
+        if (err) return callback(err, null);
+        return callback(null, post);
       });
-  } catch (error) {}
+  } catch (error) {
+    return callback("Something went wrong", null);
+  }
 }
 
-function getAllPosts(req, res) {
+function getAllPosts(callback) {
   try {
     Post.find()
       .populate("comments")
       .exec()
       .then((posts) => {
-        res.json(posts);
+        return callback(null, posts);
       });
   } catch (error) {
-    res.sendStatus(400);
+    return callback("Something went wrong", null);
   }
 }
 
-function getPostsOfUser(req, res) {
+function getPostsOfUser(id, callback) {
   try {
-    const { id } = req.body;
-    console.log(id);
     Post.find({ postedBy: id }, (err, posts) => {
-      if (err) res.sendStatus(400);
-      res.send(posts);
+      if (err) return callback("Couldnt find post", null);
+      return callback(null, posts);
     });
   } catch (error) {
-    res.sendStatus(400);
+    return callback("Something went wrong", null);
   }
 }
 
-function createPost(req, res) {
+function createPost(postData, user, callback) {
   try {
-    const post = req.body;
-    // Save new User in database, password will be hashed pre save
+    const post = {
+      title: postData.title,
+      postedBy: user._id,
+      category: postData.category,
+      tags: postData.tags,
+      content: postData.content,
+    };
     const newPost = new Post(post);
     newPost.save((err, document) => {
-      if (err) res.status(400).send({ error: "Post couldn't be created." });
-      else res.status(201).send(document);
+      if (err) return callback({ error: "Post couldn't be created." }, null);
+      else return callback(null, document);
     });
   } catch (error) {
-    console.log({ error });
-    res.status(400).send({ error: "CatchBlock: Post couldn't be created." });
+    return callback("Something went wrong", null);
   }
 }
 
-function deletePost(req, res) {
+function deletePost(id, user, callback) {
   try {
-    const { id } = req.body;
     Post.findById({ _id: id }, (err, post) => {
-      if (err || !post) return res.sendStatus(400);
-      if (req.user.id == post.postedBy || req.user.isAdmin) {
+      if (err || !post) return callback("Couldnt find post", null);
+      if (user.id == post.postedBy || user.isAdmin) {
         Post.deleteOne({ _id: id }, (err) => {
-          if (err) return res.sendStatus(400);
-          res.sendStatus(200);
+          if (err) return callback("Couldnt delete post", null);
+          return callback(null, "Post deleted");
         });
       } else {
-        res.sendStatus(401);
+        return callback({ error: "Unauthorized" }, null);
       }
     });
   } catch (error) {
-    res.sendStatus(400);
+    return callback("Something went wrong", null);
   }
 }
 
-function updatePost(req, res) {
+function updatePost(id, title, content, tags, user, callback) {
   try {
-    const { id, title, content, tags } = req.body;
-    Post.findByIdAndUpdate(
-      { _id: id },
-      {
-        $set: {
-          title: title,
-          content: content,
-          tags: tags,
-        },
-      },
-      {
-        new: true,
-        useFindAndModify: false,
-      },
-      (err, post) => {
-        if (err) return res.sendStatus(400);
-        res.send(post);
+    Post.findById({ _id: id }, (err, post) => {
+      if (err || !post) return callback("Couldnt find post", null);
+      if (user.id == post.postedBy || user.isAdmin) {
+        Post.findByIdAndUpdate(
+          { _id: id },
+          {
+            $set: {
+              title: title,
+              content: content,
+              tags: tags,
+            },
+          },
+          {
+            new: true,
+            useFindAndModify: false,
+          },
+          (err, post) => {
+            if (err) return callback("Couldnt update post", null);
+            return callback(null, post);
+          }
+        );
+      } else {
+        return callback({ error: "Unauthorized" }, null);
       }
-    );
+    });
   } catch (error) {
-    res.sendStatus(400);
+    return callback("Something went wrong", null);
   }
 }
 
-function addLike(req, res) {
+function addLike(id, user, callback) {
   try {
-    const { idUser, idPost } = req.body;
-
-    Post.findById({ _id: idPost }, (err, post) => {
-      if (err) return res.sendStatus(400);
-      if (post.likes.includes(idUser)) {
-        return res.status(200).send("User already liked post");
+    Post.findById({ _id: id }, (err, post) => {
+      if (err) return callback("Couldnt find post", null);
+      if (post.likes.includes(user._id)) {
+        return callback(null, "User already liked post");
       }
       Post.findByIdAndUpdate(
-        { _id: idPost },
+        { _id: id },
         {
           $push: {
-            likes: idUser,
+            likes: user._id,
           },
         },
         {
@@ -122,29 +128,28 @@ function addLike(req, res) {
           useFindAndModify: false,
         },
         (err, post) => {
-          if (err) res.sendStatus(400);
-          res.send(post);
+          if (err) return callback("Couldnt add like", null);
+          return callback(null, post);
         }
       );
     });
   } catch (error) {
-    res.sendStatus(400);
+    return callback("Something went wrong", null);
   }
 }
 
-function getLikesOfUser(req, res) {
+function getLikesOfUser(id, callback) {
   try {
-    const { id } = req.body;
     Post.find({ likes: id }, (err, posts) => {
-      if (err) return res.sendStatus(400);
-      res.send(posts);
+      if (err) return callback("Couldnt find posts liked by this user", null);
+      return callback(null, posts);
     });
   } catch (error) {
-    res.sendStatus(400);
+    return callback("Something went wrong", null);
   }
 }
 
-function getHome(req, res) {
+function getHome(callback) {
   try {
     Post.find({
       category: {
@@ -159,15 +164,13 @@ function getHome(req, res) {
         },
       })
       .exec((err, posts) => {
-        if (err) return res.sendStatus(400);
-        res.send(posts);
+        if (err || !posts) return callback("Couldnt find posts", null);
+        return callback(null, posts);
       });
   } catch (error) {
-    res.sendStatus(400);
+    return callback("Something went wrong", null);
   }
 }
-
-
 
 module.exports = {
   getPost,
