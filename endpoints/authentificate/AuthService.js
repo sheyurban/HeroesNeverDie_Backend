@@ -81,7 +81,7 @@ function checkSessionToken(authData, callback) {
 
 function verifyUser(token, callback) {
   User.findOne({ token }, (err, user) => {
-    if (err || !user ) return callback(err, null);
+    if (err || !user) return callback(err, null);
     else if (user.isVerified)
       return callback("User is already verified.", null);
 

@@ -63,7 +63,11 @@ async function createUser(userData, callback) {
               link: `https://localhost:8080/authenticate/verify?token=${document.token}`,
             };
             const htmlSite = template(replacements);
-            // mail.sendMail(document.email, "Welcome to the Community of Heroes never die", htmlSite)
+            mail.sendMail(
+              document.email,
+              "Welcome to the Community of Heroes never die",
+              htmlSite
+            );
 
             return callback(null, "Created User, started verifying process");
           }

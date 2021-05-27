@@ -48,7 +48,32 @@ test("should get user", async () => {
     .expect(200);
 });
 
+test("should create post", async () => {
+  await request(app)
+    .post("/post/create")
+    .set("Authorization", authToken)
+    .send({
+      title: "Hanzo Main Guide",
+      category: "Guide",
+      tags: [
+        {
+          map: "hanamura",
+          hero: "hanzo",
+        },
+      ],
+      content: "Awesome content here...",
+    })
+    .expect(201);
+});
+
+test("should get all posts", async () => {
+  const res = await request(app)
+    .get("/post")
+    .set("Authorization", authToken)
+    .expect(200);
+});
+
 afterAll(async () => {
   await User.deleteMany({});
   close();
-  });
+});

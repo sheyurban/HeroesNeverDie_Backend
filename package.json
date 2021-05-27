@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "set NODE_ENV=test&& jest --forceExit",
-    "test:watch": "jest --watch",
-    "dev": "nodemon './index.js'",
-    "startDb": "cmd /K 'C:\\Program Files\\MongoDB\\Server\\4.4\\bin\\mongod.exe'"
+    "dev": "nodemon './index.js'"
   },
   "jest": {
     "testEnvironment": "node"

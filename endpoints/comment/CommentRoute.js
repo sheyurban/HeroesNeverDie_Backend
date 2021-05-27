@@ -5,6 +5,7 @@ const logger = require("../../config/winston");
 const authService = require("../authentificate/AuthService");
 const CommentService = require("./CommentService");
 
+// create a new post
 router.post("/create", (req, res) => {
   try {
     const token = req.get("Authorization");
@@ -23,6 +24,7 @@ router.post("/create", (req, res) => {
   }
 });
 
+// get comments for a post by id
 router.get("/comments", (req, res) => {
   try {
     const token = req.get("Authorization");
@@ -41,6 +43,7 @@ router.get("/comments", (req, res) => {
   }
 });
 
+// update a comment
 router.patch("/update", (req, res) => {
   try {
     const token = req.get("Authorization");
@@ -59,6 +62,7 @@ router.patch("/update", (req, res) => {
   }
 });
 
+// delete a comment
 router.delete("/delete", (req, res) => {
   try {
     const token = req.get("Authorization");

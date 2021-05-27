@@ -5,6 +5,7 @@ const logger = require("../../config/winston");
 const authService = require("../authentificate/AuthService");
 const MessageService = require("./MessageService");
 
+// create a new message
 router.post("/create", (req, res) => {
   try {
     const token = req.get("Authorization");
@@ -23,6 +24,7 @@ router.post("/create", (req, res) => {
   }
 });
 
+// get all messages of the logged in user
 router.get("/", (req, res) => {
   try {
     const token = req.get("Authorization");

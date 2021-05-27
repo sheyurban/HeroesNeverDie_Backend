@@ -80,6 +80,8 @@ router.patch("/id", (req, res) => {
   }
 });
 
+
+// register a new user
 router.post("/register", (req, res) => {
   try {
     const userData = req.body;
@@ -92,6 +94,8 @@ router.post("/register", (req, res) => {
   }
 });
 
+
+// reseting the password
 router.patch("/resetPassword", (req, res) => {
   try {
     const token = req.get("Authorization");
@@ -110,11 +114,11 @@ router.patch("/resetPassword", (req, res) => {
   }
 });
 
+// an admin can set another user as an admin
 router.patch("/admin", (req, res) => {
   try {
     const token = req.get("Authorization");
     authService.checkSessionToken(token, (err, user) => {
-      logger.debug(user);
       if (err) return res.status(400).send(err);
 
       const { id } = req.body;

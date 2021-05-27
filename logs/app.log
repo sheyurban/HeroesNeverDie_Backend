@@ -4014,3 +4014,26 @@ Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the cli
 2021-05-27T19:27:02.822Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
 2021-05-27T19:27:31.861Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
 2021-05-27T19:27:42.501Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
+2021-05-27T19:29:10.486Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
+2021-05-27T19:30:02.964Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
+2021-05-27T19:30:34.038Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:35) token has not been created, Error: User not verified {}
+2021-05-27T19:41:57.623Z [[31merror[39m] : (endpoints\user\UserService.js:152) Did not find user for username: admin {}
+2021-05-27T19:41:57.625Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\index.js:43) Anbindung von Datenbank gescheitert {}
+2021-05-27T19:42:39.640Z [[31merror[39m] : (endpoints\user\UserService.js:152) Did not find user for username: admin {}
+2021-05-27T19:42:39.641Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\index.js:43) Anbindung von Datenbank gescheitert {}
+2021-05-27T19:42:41.067Z [[33mwarn[39m] : (test\post.test.js:69) null {}
+2021-05-27T19:43:36.191Z [[31merror[39m] : (endpoints\user\UserService.js:152) Did not find user for username: admin {}
+2021-05-27T19:43:36.196Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\index.js:43) Anbindung von Datenbank gescheitert {}
+2021-05-27T19:44:30.752Z [[31merror[39m] : (endpoints\user\UserService.js:152) Did not find user for username: admin {}
+2021-05-27T19:44:30.756Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\index.js:43) Anbindung von Datenbank gescheitert {}
+2021-05-27T19:44:56.087Z [[31merror[39m] : (endpoints\user\UserService.js:152) Did not find user for username: admin {}
+2021-05-27T19:44:56.092Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\index.js:43) Anbindung von Datenbank gescheitert {}
+2021-05-27T19:46:30.062Z [[31merror[39m] : (endpoints\user\UserService.js:152) Did not find user for username: admin {}
+2021-05-27T19:46:30.067Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\index.js:43) Anbindung von Datenbank gescheitert {}
+2021-05-27T19:48:33.469Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:34) token has not been created, Error: User not verified {}
+2021-05-27T19:48:40.719Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:34) token has not been created, Error: User not verified {}
+2021-05-27T19:48:52.263Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:34) token has not been created, Error: User not verified {}
+2021-05-27T19:58:20.507Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:34) token has not been created, Error: User not verified {}
+2021-05-27T19:58:52.410Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:34) token has not been created, Error: User not verified {}
+2021-05-27T19:59:12.295Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:34) token has not been created, Error: User not verified {}
+2021-05-27T20:24:37.653Z [[31merror[39m] : (callback (C:\Users\Shirley\Projekte\HeroesNeverDie\endpoints\authentificate\AuthRoute.js:34) token has not been created, Error: User not verified {}

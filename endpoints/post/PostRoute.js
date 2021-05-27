@@ -33,7 +33,7 @@ router.post("/create", (req, res) => {
       const post = req.body;
       PostService.createPost(post, user, (err, post) => {
         if (err) return res.status(400).send(err);
-        res.status(200).send(post);
+        res.status(201).send(post);
       });
     });
   } catch (error) {

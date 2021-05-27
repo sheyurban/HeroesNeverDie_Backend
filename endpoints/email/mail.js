@@ -3,7 +3,6 @@ const nodemailer = require("nodemailer");
 const config = nodemailer.createTransport({
   host: "smtp-mail.outlook.com",
   port: 587,
-  //   secure: false,
   auth: {
     user: "heroesneverdieoverwatch@outlook.de",
     pass: "Passwort123!",

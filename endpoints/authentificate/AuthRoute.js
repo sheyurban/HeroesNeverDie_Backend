@@ -5,9 +5,8 @@ var path = require("path");
 const logger = require("../../config/winston");
 
 const authService = require("./AuthService");
-const userService = require("../user/UserService");
-const User = require("../user/UserModel");
 
+// login, creates the auth token
 router.post("/login", (req, res, next) => {
   logger.debug("Want to create token");
   try {
@@ -41,6 +40,7 @@ router.post("/login", (req, res, next) => {
   }
 });
 
+// route to verify new users, this link is send in email
 router.get("/verify", (req, res) => {
   const { token } = req.query;
 
