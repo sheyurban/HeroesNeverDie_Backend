@@ -5,4 +5,4 @@ Authorization: Basic U2hpcmxleTpxd2VydHk=
 
 ###
 
-GET https://localhost:8080/authenticate/verify?token=60af76853d30511694031f4
+GET https://localhost:8080/authenticate/verify?token=60af76853d30511694031f
