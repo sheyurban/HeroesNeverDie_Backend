@@ -1,16 +1,24 @@
 POST https://localhost:8080/message/create
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyNTIwMTc0MSwiaWF0IjoxNjIyMTE5MjAxfQ.v3mTtode1hQhw2YeYj96oBLPQ2wLTnSCWgIWboxIXI0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyNTc3NDAyNTk3MSwiaWF0IjoxNjI1NzY4MDI1fQ.V9St_saCM5l4R-TCoDFncmdkzVakJguyQFqYnC4L9OU
 Content-Type: application/json
 
 {
-    "to": [
-      "60af76903d30511694031f48",
-      "60a406b2a7e9ce3dd856727c"      
-    ],
-    "content": "Hey, wie gehts?"
+    "to": "60afc7cd43bd1c48d43711d2",
+    "content": "Hey, wie gehts????"
+}
+
+###ADMIN
+
+POST https://localhost:8080/message/create
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyNTgyNjc2OTI5NywiaWF0IjoxNjI1ODIwNzY5fQ.RMKYFkOVVzxdQ2EciFrerBj9wygSL7Io_0OeSw_UqOA
+Content-Type: application/json
+
+{
+    "to": "60afb6f26de1ec1758dba853",
+    "content": "Auch gut. Lust ranked zu spielen?"
 }
 
 ### get messages of logged in user
 GET https://localhost:8080/message
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyNTIwMTc0MSwiaWF0IjoxNjIyMTE5MjAxfQ.v3mTtode1hQhw2YeYj96oBLPQ2wLTnSCWgIWboxIXI0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyNTc1ODQ2ODUxMSwiaWF0IjoxNjI1NzUyNDY4fQ.HPQoN2bIbiHit_yTFjmIOazXAM71DKjeum51VRTB2eo
 

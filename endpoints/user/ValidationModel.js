@@ -4,7 +4,7 @@ const mongoose = require("mongoose")
 const validationSchema = {
   username: Joi.string().min(4).required(),
   email: Joi.string().email().required(),
-  password: Joi.string().min(6).required().lowercase().uppercase(),
+  password: Joi.string().min(4).required().lowercase().uppercase(),
 };
 
 var userValidator = mongoose.model("Validation", validationSchema);

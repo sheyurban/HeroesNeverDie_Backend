@@ -1,21 +1,28 @@
-const User = require("./UserModel");
-const bcrypt = require("bcrypt");
-const atob = require("atob");
-const validator = require("../user/ValidationModel");
-const Joi = require("joi");
-const Post = require("../post/PostModel");
-const hbs = require("handlebars");
-const mail = require("../email/mail");
-const fs = require("fs");
-var logger = require("../../config/winston");
+const User = require('./UserModel');
+const bcrypt = require('bcrypt');
+const atob = require('atob');
+const validator = require('../user/ValidationModel');
+const Joi = require('joi');
+const Post = require('../post/PostModel');
+const hbs = require('handlebars');
+const mail = require('../email/mail');
+const fs = require('fs');
+var logger = require('../../config/winston');
 
 function getUsers(callback) {
   User.find((err, users) => {
     if (err) {
-      logger.error("Fehler bei Suche: " + err);
+      logger.error('Fehler bei Suche: ' + err);
       return callback(err, null);
     } else {
-      return callback(null, users);
+      let newUserArray = [];
+      users.forEach((user) => {
+        const { id, username, email, isAdmin, ...partialObject } = user;
+        const subset = { id, username, email, isAdmin };
+        newUserArray.push(subset);
+      });
+
+      return callback(null, newUserArray);
     }
   });
 }
@@ -23,13 +30,13 @@ function getUsers(callback) {
 function getUser(id, callback) {
   try {
     User.findById({ _id: id }, (err, user) => {
-      if (err) return callback("Couldnt find user", null);
-      const { id, username, email, ...partialObject } = user;
-      const subset = { id, username, email };
+      if (err) return callback('Couldnt find user', null);
+      const { id, username, email, isAdmin, ...partialObject } = user;
+      const subset = { id, username, email, isAdmin };
       return callback(null, subset);
     });
   } catch (error) {
-    return callback("Something went wrong", null);
+    return callback('Something went wrong', null);
   }
 }
 
@@ -43,9 +50,9 @@ async function createUser(userData, callback) {
       User.find({ username: userData.username }, (err, user) => {
         if (!err) {
           if (user.email == userData.email) {
-            return callback({ error: "E-Mail already in use." }, null);
+            return callback({ error: 'E-Mail already in use.' }, null);
           } else if (user.username == userData.username) {
-            return callback({ error: "Username already in use." }, null);
+            return callback({ error: 'Username already in use.' }, null);
           }
         }
 
@@ -55,8 +62,8 @@ async function createUser(userData, callback) {
           if (err)
             return callback({ error: "Account couldn't be created." }, null);
           else {
-            const filePath = "./endpoints/email/register.html";
-            const source = fs.readFileSync(filePath, "utf-8").toString();
+            const filePath = './endpoints/email/register.html';
+            const source = fs.readFileSync(filePath, 'utf-8').toString();
             const template = hbs.compile(source);
             const replacements = {
               user: document.username,
@@ -65,18 +72,18 @@ async function createUser(userData, callback) {
             const htmlSite = template(replacements);
             mail.sendMail(
               document.email,
-              "Welcome to the Community of Heroes never die",
+              'Welcome to the Community of Heroes never die',
               htmlSite
             );
 
-            return callback(null, "Created User, started verifying process");
+            return callback(null, 'Created User, started verifying process');
           }
         });
       });
     });
   } catch (error) {
     console.log({ error });
-    return callback("Something went wrong", null);
+    return callback('Something went wrong', null);
   }
 }
 
@@ -101,7 +108,7 @@ function patchPassword(newPw, user, callback) {
       else return callback(null, document);
     });
   } catch (error) {
-    return callback("Something went wrong", null);
+    return callback('Something went wrong', null);
   }
 }
 
@@ -120,42 +127,43 @@ function patchUserdata(id, username, email, callback) {
         useFindAndModify: false,
       },
       (err, user) => {
-        if (err) return callback("Couldnt patch userdata", null);
+        if (err) return callback('Couldnt patch userdata', null);
         callback(null, user);
       }
     );
   } catch (error) {
-    callback("Something went wrong", null);
+    callback('Something went wrong', null);
   }
 }
 
 function deleteUser(user, deleteUserId, callback) {
   try {
+    console.log("deleting")
     if (user.isAdmin || user._id == deleteUserId) {
-      User.findByIdAndDelete({ _id: user._id }, (err) => {
-        if (err) return callback("Couldnt delete user", null);
-        return callback(null, "successful deleted user: " + user.username);
+      User.findByIdAndDelete({ _id: deleteUserId }, (err) => {
+        if (err) return callback('Couldnt delete user', null);
+        return callback(null, 'successful deleted user');
       });
     } else {
-      return callback("Not authorized", null);
+      return callback('Not authorized', null);
     }
   } catch (error) {
-    return callback("Something went wrong", null);
+    return callback('Something went wrong', null);
   }
 }
 
 function findUserBy(searchUsername, callback) {
-  logger.debug("UserService: find User by ID " + searchUsername);
+  logger.debug('UserService: find User by ID ' + searchUsername);
   if (!searchUsername) {
-    callback("username is missing");
+    callback('username is missing');
     return;
   } else {
     var query = User.findOne({ username: searchUsername });
     query.exec(function (err, user) {
       if (err) {
-        logger.error("Did not find user for username: " + searchUsername);
+        logger.error('Did not find user for username: ' + searchUsername);
         return callback(
-          "Did not find user for username: " + searchUsername,
+          'Did not find user for username: ' + searchUsername,
           null
         );
       } else {
@@ -163,26 +171,27 @@ function findUserBy(searchUsername, callback) {
           logger.debug(`Found username: ${searchUsername}`);
           callback(null, user);
         } else {
-          if ("admin" == searchUsername) {
+          if ('admin' == searchUsername) {
             logger.debug(
-              "Does not have admin account yet. Create it with default password"
+              'Does not have admin account yet. Create it with default password'
             );
             var adminUser = new User();
-            adminUser.username = "admin";
-            adminUser.password = "123";
-            adminUser.email = "Default Admin Account";
+            adminUser.username = 'admin';
+            adminUser.password = '123';
+            adminUser.email = 'Default Admin Account';
             adminUser.isAdmin = true;
+            adminUser.isVerified = true;
 
             adminUser.save((err) => {
               if (err) {
-                logger.error("Could not create default admin account: " + err);
-                callback("Could not login to admin account", null);
+                logger.error('Could not create default admin account: ' + err);
+                callback('Could not login to admin account', null);
               }
             });
           } else {
-            logger.error("Did not find user for username: " + searchUsername);
+            logger.error('Did not find user for username: ' + searchUsername);
             return callback(
-              "Did not find user for username: " + searchUsername,
+              'Did not find user for username: ' + searchUsername,
               null
             );
           }
@@ -209,10 +218,10 @@ function makeUserToAdmin(id, user, callback) {
         }
       );
     } else {
-      return callback("Not authorized", null);
+      return callback('Not authorized', null);
     }
   } catch (error) {
-    return callback("Something went wrong", null);
+    return callback('Something went wrong', null);
   }
 }
 

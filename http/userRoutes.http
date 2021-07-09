@@ -1,24 +1,23 @@
 GET https://localhost:8080/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjExNDU0NDg1MCwiaWF0IjoxNjIyMTA4NTQ0fQ.QOA7Cn-ueFV-8ZZBHeLjIwwKp2LiITu0cTHdTmNMHGE
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyNTY5NjMwNzQwOCwiaWF0IjoxNjI1NjkwMzA3fQ.P3R7Tm9lr7AB7SK_kyn7i7u80REdaM-G-4_GrqZWAu8
 ###
 
 DELETE https://localhost:8080/users/delete
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjExMDg1MzYyMSwiaWF0IjoxNjIyMTA0ODUzfQ.-8YaxaTj6_9VlwZZBoR2mFf_Ofht-tO0eAn3eFt5byg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyNTY5ODUzMTU4NSwiaWF0IjoxNjI1NjkyNTMxfQ.Ic3lMu-Zk4Zu0bUoFP8JWSoQWWMCRCKlporyociuRqE
 Content-Type: application/json
 
 {
-    "id": "60af57433fd1c309ec4f5141"   
+    "id": "60e6174853d98e7350d24f73"   
 }
 
 
 ### get one user
 GET https://localhost:8080/users/id
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjExNDU0NDg1MCwiaWF0IjoxNjIyMTA4NTQ0fQ.QOA7Cn-ueFV-8ZZBHeLjIwwKp2LiITu0cTHdTmNMHG
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyNTY5NTAyMDQyOSwiaWF0IjoxNjI1Njg5MDIwfQ._2OMHNGz5zGIQdDndi8Dx5z0oLAvJl6aTjTV1bl6s-k
 Content-Type: application/json
 
 {
-    "id": "60af6953f374021e183b8c0"   
+    "id": "60afc7cd43bd1c48d43711d2"   
 }
 
 ### 
@@ -38,9 +37,9 @@ POST https://localhost:8080/users/register
 Content-Type: application/json
 
 {
-    "username": "Shirley",
-    "password": "qwerty",
-    "email": "shirleyurban@outlook.de"
+    "username": "Shirley1",
+    "password": "qwertz",
+    "email": "shirleyurban1@outlook.de"
 }
 ###
 
@@ -54,9 +53,9 @@ Content-Type: application/json
 ###
 
 PATCH https://localhost:8080/users/admin
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEzMzUxNDcwMiwiaWF0IjoxNjIyMTI3NTE0fQ.GS4jACJMcMyxhf_oXPSeY4mHdczL294iWsWXstlPjZk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyNTc1MTU1OTU0MSwiaWF0IjoxNjI1NzQ1NTU5fQ.CKLXjKCYfzpQpAEvALF9zkFmsGpvRoZCK-slY-2lH7M
 Content-Type: application/json
 
 {
-    "id": "60ae9dc013ce7351d0fa3905"   
+    "id": "60afc7cd43bd1c48d43711d2"   
 }

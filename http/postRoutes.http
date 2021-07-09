@@ -1,20 +1,23 @@
 ### post a new post
 POST https://localhost:8080/post/create
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyODgwMDE0NSwiaWF0IjoxNjIyMTIyODAwfQ.mT9ul7UYf-snpuUFO18Ywyn1ueADQBRie9ojr_Sff24
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyNTY4NDIzMzEwMCwiaWF0IjoxNjI1Njc4MjMzfQ.0LFxI6VxQojIAFA3Ia2CWMS8Ine90Lnog_NOCMADsiI
 Content-Type: application/json
 
 {
-    "title": "Hanzo Main Guide",
-    "category": "Guide",
-    "tags": [{
-        "map": "hanamura",
-        "hero": "hanzo"
-     }],
+    "title": "NO TOXIC WITH MIC",
+    "category": "Discuss",
+    "tags": {
+        "type": "Mapguide",
+        "language": "eng",
+        "region": "EU",
+        "mode": "Competetive OQ"
+       
+     },
     "content": "Awesome content here..."
 }
 ### get all posts
 GET https://localhost:8080/post
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyODgwMDE0NSwiaWF0IjoxNjIyMTIyODAwfQ.mT9ul7UYf-snpuUFO18Ywyn1ueADQBRie9ojr_Sff24
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyNTU2MjAwMjU2MCwiaWF0IjoxNjI1NTU2MDAyfQ.b5WLwD_R2s8ZH3c5m68h57qip1FcMWcP_SJAO2A-DEI
 
 ### get post by id
 GET https://localhost:8080/post/id
@@ -36,11 +39,11 @@ Content-Type: application/json
 
 ### delete a post
 DELETE https://localhost:8080/post/delete
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyODgwMDE0NSwiaWF0IjoxNjIyMTIyODAwfQ.mT9ul7UYf-snpuUFO18Ywyn1ueADQBRie9ojr_Sff24
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyNTY1NDg4NDI3NCwiaWF0IjoxNjI1NjQ4ODg0fQ.YwvdgLp5qw4ElcoexweppbmI8AyMihfsC4BT2GClk9k
 Content-Type: application/json
 
 {
-    "id": "60afa9e8cd7948345443c0e6"
+    "id": "60e5752a802e8726442719ac"
 }
 
 ### update a post
@@ -57,11 +60,11 @@ Content-Type: application/json
 
 ### add a like to post 
 PATCH https://localhost:8080/post/like
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyMjEyODgwMDE0NSwiaWF0IjoxNjIyMTIyODAwfQ.mT9ul7UYf-snpuUFO18Ywyn1ueADQBRie9ojr_Sff24
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyNTU2MjAwMjU2MCwiaWF0IjoxNjI1NTU2MDAyfQ.b5WLwD_R2s8ZH3c5m68h57qip1FcMWcP_SJAO2A-DEI
 Content-Type: application/json
 
 {
-    "idPost": "60afa32e2a386d5270f3dd5b"
+    "idPost": "60e2d479be3f4363b83472c6"
 }
 
 ### get all posts a user likes

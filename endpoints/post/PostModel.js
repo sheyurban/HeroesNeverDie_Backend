@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const PostSchema = new mongoose.Schema(
   {
@@ -8,7 +8,12 @@ const PostSchema = new mongoose.Schema(
     },
     postedBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
+      required: true,
+    },
+    username: {
+      type: mongoose.Schema.Types.String,
+      ref: 'User',
       required: true,
     },
     dateCreated: Date,
@@ -16,17 +21,25 @@ const PostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    tags: [],
+    tags: {
+      map: '',
+      hero: '',
+      type: '',
+      rank: '',
+      mode: '',
+      region: '',
+      language: '',
+    },
     likes: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: 'User',
       },
     ],
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Comment",
+        ref: 'Comment',
       },
     ],
     content: {
@@ -37,5 +50,5 @@ const PostSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-var Post = mongoose.model("Post", PostSchema);
+var Post = mongoose.model('Post', PostSchema);
 module.exports = Post;

@@ -1,16 +1,16 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const logger = require("../../config/winston");
+const logger = require('../../config/winston');
 
-const PostService = require("./PostService");
-const authService = require("../authentificate/AuthService");
+const PostService = require('./PostService');
+const authService = require('../authentificate/AuthService');
 
 // get all posts in db
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   try {
-    const token = req.get("Authorization");
+    const token = req.get('Authorization');
     authService.checkSessionToken(token, (err, user) => {
-      logger.debug(user);
+      logger.debug(user.username);
       if (err) return res.status(400).send(err);
       PostService.getAllPosts((err, posts) => {
         if (err) return res.status(400).send(err);
@@ -23,11 +23,10 @@ router.get("/", (req, res) => {
 });
 
 // create a new post
-router.post("/create", (req, res) => {
+router.post('/create', (req, res) => {
   try {
-    const token = req.get("Authorization");
+    const token = req.get('Authorization');
     authService.checkSessionToken(token, (err, user) => {
-      logger.debug(user);
       if (err) return res.status(400).send(err);
 
       const post = req.body;
@@ -42,11 +41,10 @@ router.post("/create", (req, res) => {
 });
 
 // get post by id
-router.get("/id", (req, res) => {
+router.get('/id', (req, res) => {
   try {
-    const token = req.get("Authorization");
+    const token = req.get('Authorization');
     authService.checkSessionToken(token, (err, user) => {
-      logger.debug(user);
       if (err) return res.status(400).send(err);
 
       const { id } = req.body;
@@ -61,11 +59,10 @@ router.get("/id", (req, res) => {
 });
 
 // get all posts of a specific user
-router.get("/user", (req, res) => {
+router.get('/user', (req, res) => {
   try {
-    const token = req.get("Authorization");
+    const token = req.get('Authorization');
     authService.checkSessionToken(token, (err, user) => {
-      logger.debug(user);
       if (err) return res.status(400).send(err);
 
       const { id } = req.body;
@@ -79,16 +76,16 @@ router.get("/user", (req, res) => {
   }
 });
 
-router.get("/test", (req, res) => {
-  res.json({ message: "pass!" });
+router.get('/test', (req, res) => {
+  res.json({ message: 'pass!' });
 });
 
 // delete post
-router.delete("/delete", (req, res) => {
+router.delete('/delete', (req, res) => {
   try {
-    const token = req.get("Authorization");
+    console.log(req.get('Authorization'));
+    const token = req.get('Authorization');
     authService.checkSessionToken(token, (err, user) => {
-      logger.debug(user);
       if (err) return res.status(400).send(err);
 
       const { id } = req.body;
@@ -103,11 +100,10 @@ router.delete("/delete", (req, res) => {
 });
 
 // change title, content and/or tags of a post
-router.patch("/update", (req, res) => {
+router.patch('/update', (req, res) => {
   try {
-    const token = req.get("Authorization");
+    const token = req.get('Authorization');
     authService.checkSessionToken(token, (err, user) => {
-      logger.debug(user);
       if (err) return res.status(400).send(err);
 
       const { id, title, content, tags } = req.body;
@@ -122,16 +118,16 @@ router.patch("/update", (req, res) => {
 });
 
 // add user who liked post and send back number of likes
-router.patch("/like", (req, res) => {
+router.patch('/like', (req, res) => {
   try {
-    const token = req.get("Authorization");
+    const token = req.get('Authorization');
     authService.checkSessionToken(token, (err, user) => {
-      logger.debug(user);
       if (err) return res.status(400).send(err);
 
       const { idPost } = req.body;
       PostService.addLike(idPost, user, (err, post) => {
         if (err) return res.status(400).send(err);
+        logger.debug('Like successfully added');
         res.status(200).send(post);
       });
     });
@@ -141,9 +137,9 @@ router.patch("/like", (req, res) => {
 });
 
 // get all liked posts of one user
-router.get("/like", (req, res) => {
+router.get('/like', (req, res) => {
   try {
-    const token = req.get("Authorization");
+    const token = req.get('Authorization');
     authService.checkSessionToken(token, (err, user) => {
       logger.debug(user);
       if (err) return res.status(400).send(err);
@@ -160,13 +156,57 @@ router.get("/like", (req, res) => {
 });
 
 // gets all post of category guide or discuss for home view
-router.get("/home", (req, res) => {
+router.get('/home', (req, res) => {
   try {
-    const token = req.get("Authorization");
+    const token = req.get('Authorization');
     authService.checkSessionToken(token, (err, user) => {
-      logger.debug(user);
       if (err) return res.status(400).send(err);
       PostService.getHome((err, posts) => {
+        if (err) return res.status(400).send(err);
+        res.status(200).send(posts);
+      });
+    });
+  } catch (error) {
+    res.status(500);
+  }
+});
+
+router.get('/guide', (req, res) => {
+  try {
+    const token = req.get('Authorization');
+    authService.checkSessionToken(token, (err, user) => {
+      if (err) return res.status(400).send(err);
+      PostService.getGuide((err, posts) => {
+        if (err) return res.status(400).send(err);
+        res.status(200).send(posts);
+      });
+    });
+  } catch (error) {
+    res.status(500);
+  }
+});
+
+router.get('/discuss', (req, res) => {
+  try {
+    const token = req.get('Authorization');
+    authService.checkSessionToken(token, (err, user) => {
+      if (err) return res.status(400).send(err);
+      PostService.getDiscuss((err, posts) => {
+        if (err) return res.status(400).send(err);
+        res.status(200).send(posts);
+      });
+    });
+  } catch (error) {
+    res.status(500);
+  }
+});
+
+router.get('/groupsearch', (req, res) => {
+  try {
+    const token = req.get('Authorization');
+    authService.checkSessionToken(token, (err, user) => {
+      if (err) return res.status(400).send(err);
+      PostService.getGroupsearch((err, posts) => {
         if (err) return res.status(400).send(err);
         res.status(200).send(posts);
       });

@@ -1,8 +1,17 @@
 ###
 
 POST https://localhost:8080/authenticate/login
-Authorization: Basic U2hpcmxleTpxd2VydHk=
+Authorization: Basic U2hpcmxleTpxd2VydHo=
+
+###
+GET https://localhost:8080/authenticate/verify?token=60af76853d30511694031f4
 
 ###
 
-GET https://localhost:8080/authenticate/verify?token=60af76853d30511694031f4
+POST http://localhost:8080/authenticate/login
+Authorization: Basic U2hpcmxleTpxd2VydHo=
+
+###
+
+GET https://localhost:8080/localhost:8080/authenticate/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiU2hpcmxleSIsImV4cCI6MTYyNDQ1MjM3MjkyNSwiaWF0IjoxNjI0NDQ2MzcyfQ.qqSZqnpAlQj6-X9vctcKjxXwrfBS8hNcdK23rcA8PhM

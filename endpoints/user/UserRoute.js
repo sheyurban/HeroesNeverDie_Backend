@@ -1,21 +1,20 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const userService = require("./UserService");
-const authService = require("../authentificate/AuthService");
-const logger = require("../../config/winston");
+const userService = require('./UserService');
+const authService = require('../authentificate/AuthService');
+const logger = require('../../config/winston');
 
 // get all users
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   try {
-    const token = req.get("Authorization");
+    const token = req.get('Authorization');
     authService.checkSessionToken(token, (err, user) => {
       if (err) res.status(401).send(err);
-      console.log(user);
       userService.getUsers((err, result) => {
         if (result) {
           res.send(Object.values(result));
         } else {
-          res.send("Es gab Probleme");
+          res.send('Es gab Probleme');
         }
       });
     });
@@ -25,14 +24,15 @@ router.get("/", (req, res) => {
 });
 
 // deleting user
-router.delete("/delete", (req, res) => {
+router.delete('/delete', (req, res) => {
   try {
-    const token = req.get("Authorization");
+    const token = req.get('Authorization');
     authService.checkSessionToken(token, (err, user) => {
-      if (err) res.status(401).send(err);
+      if (err) res.status(401).send("lol");
       console.log(user);
 
       const { id } = req.body;
+      console.log(id)
       userService.deleteUser(user, id, (err, result) => {
         if (err) return res.status(401).send(err);
         res.send(result);
@@ -44,9 +44,9 @@ router.delete("/delete", (req, res) => {
 });
 
 // get user with id
-router.get("/id", (req, res) => {
+router.get('/id', (req, res) => {
   try {
-    const token = req.get("Authorization");
+    const token = req.get('Authorization');
     authService.checkSessionToken(token, (err, user) => {
       if (err) return res.status(400).send(err);
 
@@ -62,9 +62,9 @@ router.get("/id", (req, res) => {
 });
 
 // change username and email
-router.patch("/id", (req, res) => {
+router.patch('/id', (req, res) => {
   try {
-    const token = req.get("Authorization");
+    const token = req.get('Authorization');
     authService.checkSessionToken(token, (err, user) => {
       logger.debug(user);
       if (err) return res.status(400).send(err);
@@ -80,9 +80,8 @@ router.patch("/id", (req, res) => {
   }
 });
 
-
 // register a new user
-router.post("/register", (req, res) => {
+router.post('/register', (req, res) => {
   try {
     const userData = req.body;
     userService.createUser(userData, (err, result) => {
@@ -94,11 +93,10 @@ router.post("/register", (req, res) => {
   }
 });
 
-
 // reseting the password
-router.patch("/resetPassword", (req, res) => {
+router.patch('/resetPassword', (req, res) => {
   try {
-    const token = req.get("Authorization");
+    const token = req.get('Authorization');
     authService.checkSessionToken(token, (err, user) => {
       logger.debug(user);
       if (err) return res.status(400).send(err);
@@ -115,9 +113,9 @@ router.patch("/resetPassword", (req, res) => {
 });
 
 // an admin can set another user as an admin
-router.patch("/admin", (req, res) => {
+router.patch('/admin', (req, res) => {
   try {
-    const token = req.get("Authorization");
+    const token = req.get('Authorization');
     authService.checkSessionToken(token, (err, user) => {
       if (err) return res.status(400).send(err);
 
